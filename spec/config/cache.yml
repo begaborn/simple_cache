@@ -1,0 +1,3 @@
+cache:
+  association_cache: true 
+  expires_in: 2.hours
