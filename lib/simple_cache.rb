@@ -10,7 +10,7 @@ module SimpleCache
   extend ActiveSupport::Concern
   include SimpleCache::Helpable
   include SimpleCache::HasMany
-  #include SimpleCache::HasOne
+  include SimpleCache::HasOne
 
   def self.store 
     @store ||= ActiveSupport::Cache::MemCacheStore.new  

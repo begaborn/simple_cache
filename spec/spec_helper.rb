@@ -46,6 +46,8 @@ RSpec.configure do |config|
     3.times do |i|
       Weapon.create!(player: user.players.first, name: "weapon#{i}")
     end
+
+    Account.create!(user: user)
   end
 
   config.after(:all) do
