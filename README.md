@@ -1,43 +1,18 @@
-# SimpleCache
+# What's Simple Cache
+Simple Cache put your model objects associated with a base model into Memcached. Memcached is used as the backend cache store, and if the model objects are not in the Memcached(a cache miss), those objects would be loaded from the database.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/simple_cache`. To experiment with that code, run `bin/console` for an interactive prompt.
+If you commit transaction in your program, the model objects would be removed from Memcached and loaded from the database again. 
 
-TODO: Delete this and the text above, and describe your gem
+# How it works 
+Just only add this Gem! Nothing needs to be done! 
 
-## Installation
+# Notes
+- If you specify options besides the following value for `has_many` or `has_one`, the model objects would not be cached in Memcached.
+- Only stored the objects associated by `has_many` or `has_one`, not supported `belongs_to`, `has_and_belongs_to_many`.
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'simple_cache'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install simple_cache
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/simple_cache. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/begaborn/simple_cache. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
-
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the SimpleCache project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/simple_cache/blob/master/CODE_OF_CONDUCT.md).
