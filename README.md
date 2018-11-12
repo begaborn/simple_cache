@@ -29,7 +29,7 @@ end
 
 At first, the `players` objects, which is associated with `user` object, will be retrieved from the database when executing the following code. At the same time, the `players` objects will be stored in Memcached.
 
-When executing the following code, `players` objects will be retrieved from Memcached, not database.
+When executing the following code again, `players` objects will be retrieved from Memcached, not database.
 ```
 User.take.players
 ```
