@@ -1,7 +1,5 @@
 # What's Simple Cache
-Simple Cache stores your model objects, which is associated with a base model, into Memcached. Memcached is used as the backend cache store, and if they are not in the Memcached(a cache miss), they will be loaded from the database.
-
-If you commit transactions in your program, the model objects will be removed from Memcached and retrieved from the database again.
+Simple Cache stores your model objects, which is associated with a base model, into Memcached. If they are in Memcached(a cache hit), they will be loaded from Memcached instead of the database. If you commit transactions in your program, the model objects will be removed from Memcached and retrieved from the database again.
 
 # How it works 
 Just only add this Gem! Nothing more needs to be done! 
@@ -43,7 +41,7 @@ User.take.players
 
 
 # Notes
-1. If you specify options besides the following values for `has_many` or `has_one`, the model objects wll not be cached in Memcached.
+1. If you specify options except the following values for `has_many` or `has_one`, the model objects wll not be cached in Memcached.
 ```
 :class_name, :foreign_key, :dependent, :counter_cache, :auto_save, :extend
 ```
