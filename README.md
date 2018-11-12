@@ -29,7 +29,7 @@ class Player < ApplicationRecord
 end
 ``` 
 
-At first, the `players` objects, which are associated with `user` object, will be retrieved from the database when executing the following code. At the same time, the `players` objects will be stored in Memcached.
+At first, the `players` objects, which are associated with `user` object, will be retrieved from the database when executing the following code. At the same time, the `players` objects will be stored in the Memcached.
 
 When executing the following code again, `players` objects will be retrieved from the Memcached, not database.
 ```
