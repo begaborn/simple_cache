@@ -58,11 +58,11 @@ module SimpleCache
 
       def use_cache?(options = {})
         (options[:cache].nil? || options[:cache]) && 
-        (options.keys - allowed_options).size.zero? 
+        (options.keys & not_allowed_options).size.zero? 
       end
 
-      def allowed_options
-        [:class_name, :foreign_key, :dependent, :counter_cache, :auto_save, :extend]
+      def not_allowed_options
+        [:as, :through, :primary_key, :source, :source_type, :inverse_of]
       end
     end
   end

@@ -38,7 +38,7 @@ module SimpleCache
     @use_cache ||= (config['association_cache'].nil? || config['association_cache'])
   end
 
-  def self.sanitize(**options)
+  def self.sanitize(options)
     options.delete(:cache)
     options || {}
   end
