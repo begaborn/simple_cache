@@ -3,28 +3,45 @@ class Account < ActiveRecord::Base
 end
 
 class Weapon < ActiveRecord::Base
-  belongs_to :player 
+  has_one :item, as: :item
+  belongs_to :player
+end
+
+class Weapon::Armor < Weapon
+end
+
+class Weapon::Sword < Weapon
+end
+
+class Potion < ActiveRecord::Base
+  has_one :item, as: :item
+end
+
+class Item < ActiveRecord::Base
+  belongs_to :player
+  belongs_to :item, polymorphic: true
 end
 
 class CreditCard < ActiveRecord::Base
   belongs_to :user
+  has_one    :previous, class_name: 'CreditCard', foreign_key: 'after_id'
 end
 
 class Player < ActiveRecord::Base
-  has_many   :weapons
+  has_many   :items
   belongs_to :user
 end
 
 class User < ActiveRecord::Base
-  has_many :weapons, foreign_key: :u_id
   has_many :players
-  has_many :p1, class_name: :Player do 
+  has_many :p1, class_name: :Player do
     def hero
-      where(is_hero: true)
+      find_by(is_hero: true)
     end
   end
 
-  has_many :p2, -> { where(is_hero: false) }, class_name: :Player, foreign_key: :user_id 
+  has_many :p2, -> { where(is_hero: false) }, class_name: :Player, foreign_key: :user_id
   has_many :credit_cards, cache: false
-  has_one  :account
+  has_one  :account, cache: false
+  has_one  :account_with_cache, class_name: :Account
 end

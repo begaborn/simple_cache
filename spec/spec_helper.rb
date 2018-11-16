@@ -2,10 +2,11 @@ require "bundler/setup"
 require "simple_cache"
 require "support/models"
 require "pry-byebug"
+require "rspec/its"
 
 SimpleCache.instance_variable_set(:@directory, File.dirname(__FILE__))
 
-BaseSimpleCacheMigration = (SimpleCache.rails4? ? ActiveRecord::Migration : ActiveRecord::Migration[ActiveRecord::VERSION::STRING[0..2]]) 
+BaseSimpleCacheMigration = (SimpleCache.rails4? ? ActiveRecord::Migration : ActiveRecord::Migration[ActiveRecord::VERSION::STRING[0..2]])
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
@@ -20,40 +21,59 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before(:each) do 
+  config.before(:each) do
     SimpleCache.store.clear
   end
-  
+
   config.before(:all) do
     migration_dir = "#{File.dirname(__FILE__)}/migrations"
-    
+
     if SimpleCache.rails4?
-      ActiveRecord::Migrator.migrate(migration_dir) 
+      ActiveRecord::Migrator.migrate(migration_dir)
     else
       ActiveRecord::MigrationContext.new(migration_dir).up
     end
 
-    user = User.create!(name: 'user')
+    user = User.create({ name: 'SimpleCache user', age: 1 })
 
-    Player.create!(user: user, name: "player1", is_hero: true) 
-    Player.create!(user: user, name: "player2", is_hero: false) 
-    Player.create!(user: user, name: "player3", is_hero: false) 
+    players = Player.create([
+      { user: user, name: 'SimpleCache player1', is_hero: true },
+      { user: user, name: 'SimpleCache player2', is_hero: false },
+      { user: user, name: 'SimpleCache player3', is_hero: false }
+    ])
 
-    3.times do |i|
-      CreditCard.create!(user: user, name: "credit_card#{i}") 
-    end
+    weapons = Weapon.create!([
+      { name: 'SimpleCache sword1', type: 'Weapon::Sword' },
+      { name: 'SimpleCache armor1', type: 'Weapon::Armor' },
+      { name: 'SimpleCache sword2', type: 'Weapon::Sword' }
+    ])
 
-    3.times do |i|
-      Weapon.create!(player: user.players.first, name: "weapon#{i}")
-    end
+    potions = Potion.create!([
+      { name: 'SimpleCache hp1' },
+      { name: 'SimpleCache mp1' },
+      { name: 'SimpleCache antidote1' }
+    ])
 
-    Account.create!(user: user)
+    Item.create!([
+      { player: players.first, item: weapons.first },
+      { player: players.first, item: potions.first },
+      { player: players.first, item: weapons.first }
+    ])
+
+    Account.create({user: user, name: 'Account name'})
+
+    credit_cards = CreditCard.create([
+      {user: user, name: 'Epos Visa Card', expire_date: Date.new(2018, 10, 10)},
+      {user: user, name: 'MUFG Mater Card', expire_date: Date.new(2030, 11, 11)}
+    ])
+
+    CreditCard.create({user: user, name: 'Epos Visa Card', expire_date: Date.new(2030, 10, 10), previous: credit_cards.first })
   end
 
   config.after(:all) do
     migration_dir = "#{File.dirname(__FILE__)}/migrations"
     if SimpleCache.rails4?
-      ActiveRecord::Migrator.down(migration_dir) 
+      ActiveRecord::Migrator.down(migration_dir)
     else
       ActiveRecord::MigrationContext.new(migration_dir).down
     end

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["begaborn@gmail.com"]
 
   spec.summary       = "Easy Memcache Caching for ActiveRecord Association"
-  spec.description   = "Simple Cache put your model objects associated with a base model into Memcached" 
+  spec.description   = "Simple Cache put your model objects associated with a base model into Memcached"
   spec.homepage      = "https://github.com/begaborn"
   spec.license       = "MIT"
 
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.2.0'
 
-  spec.add_dependency('activerecord', '>= 4.2.0') 
+  spec.add_dependency('activerecord', '>= 4.2.0')
   spec.add_dependency('activesupport', '>= 4.2.0')
   spec.add_dependency('dalli')
   spec.add_dependency('memcached', '~> 1.8.0')
@@ -33,5 +33,6 @@ Gem::Specification.new do |spec|
   #spec.add_development_dependency 'mysql2', '= 0.3.18'
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec-its'
 end

@@ -9,6 +9,7 @@ module SimpleCache
     end
 
     def cache_association_model(method_name)
+      return yield unless cachable?(method_name)
       @simple_cache ||= {}
       @simple_cache[method_name.to_sym] ||= SimpleCache.store.fetch(cache_key_by(method_name), expires_in: self.expires_in) do
         yield
@@ -20,8 +21,12 @@ module SimpleCache
       super
     end
 
-    def cache_key_by(method_name) 
-      self.class.cache_key_by(self.id, method_name)
+    def cache_key_by(method_name)
+      self.class.cache_key_by(id, method_name)
+    end
+
+    def lock_cache
+      SimpleCache.store.write(cache_key_by(method_name), -1, expires_in: 2.minutes)
     end
 
     def delete_cache(method_name)
@@ -30,7 +35,11 @@ module SimpleCache
 
     def expires_in
       @expires_in ||= (class_eval(SimpleCache.config['expires_in'] || '') || 1.hours)
-    end 
+    end
+
+    def cachable?(method_name)
+      SimpleCache.store.read(cache_key_by(method_name)) != -1
+    end
 
     module ClassMethods
       def cache_key_by(id, method_name)
@@ -46,10 +55,10 @@ module SimpleCache
 
         unless r.klass.respond_to?(:inverse_reflections)
           logger.warn 'The objects in the cache would not be updated unless SimpleCache::AutoUpdate is included' if logger
-          return 
+          return
         end
         inverse_reflections = r.klass.inverse_reflections
-        inverse_reflections[self.name] ||= [] 
+        inverse_reflections[self.name] ||= []
         inverse_reflections[self.name] += [{
           name: name,
           foreign_key: r.foreign_key.to_sym
@@ -57,8 +66,8 @@ module SimpleCache
       end
 
       def use_cache?(options = {})
-        (options[:cache].nil? || options[:cache]) && 
-        (options.keys & not_allowed_options).size.zero? 
+        (options[:cache].nil? || options[:cache]) &&
+        (options.keys & not_allowed_options).size.zero?
       end
 
       def not_allowed_options
