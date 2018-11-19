@@ -11,7 +11,7 @@ module SimpleCache
     def cache_association_model(method_name)
       return yield unless cachable?(method_name)
       @simple_cache ||= {}
-      @simple_cache[method_name.to_sym] ||= SimpleCache.store.fetch(cache_key_by(method_name), expires_in: self.expires_in) do
+      @simple_cache[method_name.to_sym] ||= SimpleCache.store.fetch(cache_key_by(method_name), expires_in: SimpleCache.expires_in) do
         yield
       end
     end
@@ -25,23 +25,23 @@ module SimpleCache
       self.class.cache_key_by(id, method_name)
     end
 
-    def lock_cache
+    def lock_cache(method_name)
       SimpleCache.store.write(cache_key_by(method_name), -1, expires_in: 2.minutes)
     end
 
     def delete_cache(method_name)
-      SimpleCache.store.delete(cache_key_by(method_name))
-    end
-
-    def expires_in
-      @expires_in ||= (class_eval(SimpleCache.config['expires_in'] || '') || 1.hours)
+      self.class.delete_cache(self.id, method_name)
     end
 
     def cachable?(method_name)
-      SimpleCache.store.read(cache_key_by(method_name)) != -1
+      self.class.cachable?(id, method_name)
     end
 
     module ClassMethods
+      def cachable?(id, method_name)
+        SimpleCache.store.read(cache_key_by(id, method_name)) != -1
+      end
+
       def cache_key_by(id, method_name)
         "simple_cache:#{self.name.split('::').first.underscore}.#{id}.#{method_name}"
       end

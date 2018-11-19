@@ -5,15 +5,17 @@ require "simple_cache/helpable"
 require "simple_cache/auto_update"
 require "simple_cache/has_many"
 require "simple_cache/has_one"
+require "simple_cache/find"
 
 module SimpleCache
   extend ActiveSupport::Concern
   include SimpleCache::Helpable
   include SimpleCache::HasMany
   include SimpleCache::HasOne
+  include SimpleCache::Find
 
-  def self.store 
-    @store ||= ActiveSupport::Cache::MemCacheStore.new  
+  def self.store
+    @store ||= ActiveSupport::Cache::MemCacheStore.new
   end
 
   def self.config
@@ -35,7 +37,11 @@ module SimpleCache
   end
 
   def self.use_cache?
-    @use_cache ||= (config['association_cache'].nil? || config['association_cache'])
+    @use_cache ||= (config['ar_simple_cache'].nil? || config['ar_simple_cache'])
+  end
+
+  def self.expires_in
+    @expires_in ||= (class_eval(SimpleCache.config['expires_in'] || '') || 1.hours)
   end
 
   def self.sanitize(options)
@@ -54,7 +60,7 @@ module SimpleCache
   def self.rails50?
     ActiveRecord::VERSION::MAJOR == 5 && ActiveRecord::VERSION::MINOR == 0
   end
-  
+
   def self.atleast_rails50?
     ActiveRecord::VERSION::MAJOR >= 5
   end
@@ -76,7 +82,7 @@ module SimpleCache
   end
 end
 
-class ActiveRecord::Base 
+class ActiveRecord::Base
   if SimpleCache.use_cache?
     include SimpleCache::AutoUpdate
     include SimpleCache
