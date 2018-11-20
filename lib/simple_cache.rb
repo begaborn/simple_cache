@@ -20,7 +20,7 @@ module SimpleCache
 
   def self.config
     @config ||= begin
-      file_name = File.join(SimpleCache.directory, 'config/cache.yml').to_s
+      file_name = File.join(SimpleCache.directory, 'config/simple_cache.yml').to_s
 
       if File.exist?(file_name) || File.symlink?(file_name)
         config ||= HashWithIndifferentAccess.new(YAML.load(ERB.new(File.read(file_name)).result))['cache']
@@ -36,8 +36,8 @@ module SimpleCache
     @directory ||= defined?(::Rails.root) ? Rails.root.to_s : Dir.pwd
   end
 
-  def self.use_cache?
-    @use_cache ||= (config['ar_simple_cache'].nil? || config['ar_simple_cache'])
+  def self.auto_cache?
+    @auto_cache ||= (config['auto_cache'].nil? || config['auto_cache'])
   end
 
   def self.expires_in
@@ -83,8 +83,6 @@ module SimpleCache
 end
 
 class ActiveRecord::Base
-  if SimpleCache.use_cache?
-    include SimpleCache::AutoUpdate
-    include SimpleCache
-  end
+  include SimpleCache::AutoUpdate
+  include SimpleCache
 end
