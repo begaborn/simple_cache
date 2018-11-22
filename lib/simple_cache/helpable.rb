@@ -8,11 +8,27 @@ module SimpleCache
       end
     end
 
-    def cache_association_model(method_name)
+    def cache_association_model(method_name, &block)
       return yield unless cachable?(method_name)
       @simple_cache ||= {}
-      @simple_cache[method_name.to_sym] ||= SimpleCache.store.fetch(cache_key_by(method_name), expires_in: SimpleCache.expires_in) do
-        yield
+      @simple_cache[method_name.to_sym] ||= fetch_cache_association_model(method_name, &block)
+    end
+
+    def fetch_cache_association_model(method_name, &block)
+      cached_obj = SimpleCache.store.read(cache_key_by(method_name))
+      if cached_obj.nil?
+        # Address an issue that cause TypeError when caching the association model in RABL.
+        begin
+          obj = yield
+          Marshal.dump(obj)
+          SimpleCache.store.write(cache_key_by(method_name), obj, expires_in: SimpleCache.expires_in)
+        rescue => ex
+          # Reload and store the objects again.
+          return self.class.find(self.id).send(method_name)
+        end
+        obj
+      else
+        cached_obj
       end
     end
 
