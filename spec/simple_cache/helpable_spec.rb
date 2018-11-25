@@ -20,7 +20,7 @@ RSpec.describe SimpleCache::Helpable do
   end
 
   describe "#use_cache?" do
-    subject { User.use_cache?(options) }
+    subject { SimpleCache.use?(options) }
 
     describe "When the specified options are not allowed" do
       let(:options) { {through: :subscriptions} }

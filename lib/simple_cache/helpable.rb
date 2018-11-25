@@ -1,3 +1,5 @@
+require 'simple_cache/helper'
+
 module SimpleCache
   module Helpable
     extend ActiveSupport::Concern
@@ -8,64 +10,24 @@ module SimpleCache
       end
     end
 
-    def cache_association_model(method_name, &block)
-      return yield unless cachable?(method_name)
+    def simple_cache(method_name)
       @simple_cache ||= {}
-      @simple_cache[method_name.to_sym] ||= fetch_cache_association_model(method_name, &block)
+      @simple_cache[method_name] ||= SimpleCache::Helper.new self.class, self.id, method_name
     end
 
-    def fetch_cache_association_model(method_name, &block)
-      cached_obj = SimpleCache.store.read(cache_key_by(method_name))
-      if cached_obj.nil?
-        # Address an issue that cause TypeError when caching the association model in RABL.
-        begin
-          obj = yield
-          Marshal.dump(obj)
-          SimpleCache.store.write(cache_key_by(method_name), obj, expires_in: SimpleCache.expires_in)
-        rescue => ex
-          # Reload and store the objects again.
-          return self.class.find(self.id).send(method_name)
-        end
-        obj
-      else
-        cached_obj
-      end
+    def cache_association_model(method_name, &block)
+      method_name = method_name.to_sym
+      simple_cache = simple_cache(method_name)
+      @association_cache ||= {}
+      @association_cache[method_name] ||= simple_cache.fetch(&block)
     end
 
     def reload
-      remove_instance_variable(:@simple_cache)
+      remove_instance_variable(:@association_cache)
       super
     end
 
-    def cache_key_by(method_name)
-      self.class.cache_key_by(id, method_name)
-    end
-
-    def lock_cache(method_name)
-      SimpleCache.store.write(cache_key_by(method_name), -1, expires_in: 2.minutes)
-    end
-
-    def delete_cache(method_name)
-      self.class.delete_cache(self.id, method_name)
-    end
-
-    def cachable?(method_name)
-      self.class.cachable?(id, method_name)
-    end
-
     module ClassMethods
-      def cachable?(id, method_name)
-        SimpleCache.store.read(cache_key_by(id, method_name)) != -1
-      end
-
-      def cache_key_by(id, method_name)
-        "simple_cache:#{self.name.split('::').first.underscore}.#{id}.#{method_name}"
-      end
-
-      def delete_cache(id, method_name)
-        SimpleCache.store.delete(cache_key_by(id, method_name))
-      end
-
       def add_inverse_reflections(name)
         r = reflections[name.to_s]
 
@@ -79,18 +41,6 @@ module SimpleCache
           name: name,
           foreign_key: r.foreign_key.to_sym
         }]
-      end
-
-      def use_cache?(options = {})
-        if SimpleCache.auto_cache?
-          (options[:cache].nil? || options[:cache])
-        else
-          (options[:cache].present? && options[:cache])
-        end && (options.keys & not_allowed_options).size.zero?
-      end
-
-      def not_allowed_options
-        [:as, :through, :primary_key, :source, :source_type, :inverse_of]
       end
     end
   end

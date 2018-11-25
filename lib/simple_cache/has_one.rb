@@ -9,25 +9,25 @@ module SimpleCache
 
         if options == {} && scope.is_a?(Hash)
           org_options = scope.dup
-          SimpleCache.sanitize(scope) 
+          SimpleCache.sanitize(scope)
         else
           org_options = options.dup
-          SimpleCache.sanitize(options) 
+          SimpleCache.sanitize(options)
         end
 
         super
 
-        return unless use_cache?(org_options)
+        return unless SimpleCache.use?(org_options)
         add_inverse_reflections(name)
         define_cache_method_for_one_to_one(name, options)
       end
 
-      private 
+      private
 
       def define_cache_method_for_one_to_one(method_name, **options)
         define_method(method_name) do
-          self.cache_association_model(method_name) do 
-            super() 
+          self.cache_association_model(method_name) do
+            super()
           end
         end
       end

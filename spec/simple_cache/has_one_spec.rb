@@ -3,7 +3,7 @@ RSpec.describe SimpleCache::HasOne do
     let(:user) { User.take }
 
     context "when option 'cache' is false" do
-      let(:cache_key) { user.cache_key_by(:account) }
+      let(:cache_key) { SimpleCache.key(User, user.id, :account) }
 
       subject { user.account }
 
@@ -18,7 +18,7 @@ RSpec.describe SimpleCache::HasOne do
 
     context "when specifying option 'class_name' + 'foreing_key'" do
       let(:last_credit_card) { user.credit_cards.last }
-      let(:cache_key) { last_credit_card.cache_key_by(:previous) }
+      let(:cache_key) { SimpleCache.key(CreditCard, last_credit_card.id, :previous) }
 
       subject { last_credit_card.previous }
 
@@ -49,7 +49,7 @@ RSpec.describe SimpleCache::HasOne do
 
         it "should remove the association objects from the cache store" do
           subject
-          expect(SimpleCache.store.read(last_credit_card.cache_key_by(:previous))).to be_nil
+          expect(SimpleCache.store.read(cache_key)).to be_nil
         end
 
         its(:after_id) { is_expected.to eq(changed_after_id) }

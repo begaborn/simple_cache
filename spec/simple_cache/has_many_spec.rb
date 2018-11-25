@@ -3,7 +3,7 @@ RSpec.describe SimpleCache::HasMany do
     let(:user) { User.take }
 
     context "when option 'cache' is false" do
-      let(:cache_key) { user.cache_key_by(:credit_cards) }
+      let(:cache_key) { SimpleCache.key(User, user.id, :credit_cards) }
 
       subject { user.credit_cards }
 
@@ -21,7 +21,7 @@ RSpec.describe SimpleCache::HasMany do
     end
 
     context "when using cache" do
-      let(:cache_key) { user.cache_key_by(:players) }
+      let(:cache_key) { SimpleCache.key(User, user.id, :players) }
 
       subject { user.players }
 
@@ -32,9 +32,9 @@ RSpec.describe SimpleCache::HasMany do
       its(:first) { is_expected.to be_an(Player) }
 
       it "should cache the association objects" do
-        expect(SimpleCache.store.read(user.cache_key_by(:players))).to be_nil
+        expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(SimpleCache.store.read(user.cache_key_by(:players))).to eq(user.players)
+        expect(SimpleCache.store.read(cache_key)).to eq(user.players)
       end
 
       context "after committing a transaction" do
@@ -56,7 +56,7 @@ RSpec.describe SimpleCache::HasMany do
 
         it "should remove the association objects from the cache store" do
           subject
-          expect(SimpleCache.store.read(user.cache_key_by(:players))).to be_nil
+          expect(SimpleCache.store.read(cache_key)).to be_nil
         end
 
         its(:name) { is_expected.to eq(changed_name) }
@@ -76,16 +76,16 @@ RSpec.describe SimpleCache::HasMany do
           end
 
           it "should cache the association objects" do
-            expect(SimpleCache.store.read(user.cache_key_by(:players))).to be_nil
+            expect(SimpleCache.store.read(cache_key)).to be_nil
             cached_objects = subject
-            expect(SimpleCache.store.read(user.cache_key_by(:players))).to eq(cached_objects)
+            expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
           end
         end
       end
     end
 
     context "when specifying the options 'class_name' + 'foreign_key' and scope " do
-      let(:cache_key) { user.cache_key_by(:p2) }
+      let(:cache_key) { SimpleCache.key(User, user.id, :p2) }
 
       subject { user.p2.first }
 
@@ -145,7 +145,7 @@ RSpec.describe SimpleCache::HasMany do
     end
 
     context "when specifying a block" do
-      let(:cache_key) { user.cache_key_by(:p1) }
+      let(:cache_key) { SimpleCache.key(User, user.id, :p1) }
 
       subject { user.p1.hero }
 
@@ -206,10 +206,10 @@ RSpec.describe SimpleCache::HasMany do
 
     context "while locking" do
       let(:user) { User.take }
-      let(:cache_key) { user.cache_key_by(:players) }
+      let(:cache_key) { SimpleCache.key(User, user.id, :players) }
 
       before do
-        allow(user).to receive(:cachable?).and_return(false)
+        user.simple_cache(:players).lock
       end
 
       subject { user.players }
@@ -222,7 +222,33 @@ RSpec.describe SimpleCache::HasMany do
 
       it "should not cache the association objects" do
         subject
-        expect(SimpleCache.store.read(cache_key)).to be_nil
+        expect(SimpleCache.store.read(cache_key)).to eq(SimpleCache::LOCK_VAL)
+      end
+    end
+
+    context "commit a transaction while locking" do
+      let(:user) { User.take }
+      let(:cache_key) { SimpleCache.key(User, user.id, :players) }
+
+      before do
+        user.simple_cache(:players).lock
+      end
+
+      subject do
+        user.players.first.name = "kkk"
+        user.players.first.save!
+        User.take.players
+      end
+
+      it { is_expected.to be_an(ActiveRecord::Associations::CollectionProxy) }
+
+      its(:size) { is_expected.to eq(User.take.players.size) }
+
+      its(:first) { is_expected.to be_an(Player) }
+
+      it "should not cache the association objects" do
+        cached_obj = subject
+        expect(SimpleCache.store.read(cache_key)).to eq(cached_obj)
       end
     end
 

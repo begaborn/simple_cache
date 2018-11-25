@@ -8,11 +8,8 @@ require "simple_cache/has_one"
 require "simple_cache/find"
 
 module SimpleCache
-  extend ActiveSupport::Concern
-  include SimpleCache::Helpable
-  include SimpleCache::HasMany
-  include SimpleCache::HasOne
-  include SimpleCache::Find
+
+  LOCK_VAL = -1
 
   def self.store
     @store ||= ActiveSupport::Cache::MemCacheStore.new
@@ -44,9 +41,8 @@ module SimpleCache
     @expires_in ||= (class_eval(SimpleCache.config['expires_in'] || '') || 1.hours)
   end
 
-  def self.sanitize(options)
-    options.delete(:cache)
-    options || {}
+  def self.not_allowed_options
+    [:as, :through, :primary_key, :source, :source_type, :inverse_of]
   end
 
   def self.rails4?
@@ -83,6 +79,12 @@ module SimpleCache
 end
 
 class ActiveRecord::Base
-  include SimpleCache::AutoUpdate
-  include SimpleCache
+  include SimpleCache::Helpable
+
+  if SimpleCache.auto_cache?
+    include SimpleCache::AutoUpdate
+    include SimpleCache::HasMany
+    include SimpleCache::HasOne
+    include SimpleCache::Find
+  end
 end

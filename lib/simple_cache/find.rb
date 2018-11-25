@@ -9,9 +9,10 @@ module SimpleCache
         return super if ids.size != 1 || block_given? || args.first.kind_of?(Array)
 
         id = ids.first
-        return super unless cachable?(id, method_name)
+        simple_cache = SimpleCache::Helper.new self, id, method_name
+        return super unless simple_cache.cachable?
 
-        SimpleCache.store.fetch(cache_key_by(id, method_name), expires_in: SimpleCache.expires_in) do
+        SimpleCache.store.fetch(simple_cache.key, expires_in: SimpleCache.expires_in) do
           super
         end
       end
