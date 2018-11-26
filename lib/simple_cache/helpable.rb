@@ -18,12 +18,12 @@ module SimpleCache
     def cache_association_model(method_name, &block)
       method_name = method_name.to_sym
       simple_cache = simple_cache(method_name)
-      @association_cache ||= {}
-      @association_cache[method_name] ||= simple_cache.fetch(&block)
+      @association_simple_cache ||= {}
+      @association_simple_cache[method_name] ||= simple_cache.fetch(&block)
     end
 
     def reload
-      remove_instance_variable(:@association_cache)
+      remove_instance_variable(:@association_simple_cache) if @association_simple_cache
       super
     end
 
