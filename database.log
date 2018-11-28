@@ -9290,3 +9290,899 @@ I, [2018-11-06T09:46:15.643366 #73564]  INFO -- : Migrating to CreateUsers (0)
 D, [2018-11-06T09:46:15.648742 #73564] DEBUG -- :   [1m[35m (5.0ms)[0m  [1m[35mDROP TABLE `users`[0m
 D, [2018-11-06T09:46:15.650698 #73564] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (1.2ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '0'[0m
 D, [2018-11-06T09:46:15.651081 #73564] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:49.938058 #49107] DEBUG -- :   [1m[35m (17.2ms)[0m  [1m[35mSET  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+D, [2018-11-28T15:35:49.942563 #49107] DEBUG -- :   [1m[35m (0.6ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:49.963363 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:49.965538 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:50.023629 #49107] DEBUG -- :   [1m[35m (53.8ms)[0m  [1m[35mCREATE TABLE `users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `age` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:50.027867 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.103212 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181111071536')[0m
+D, [2018-11-28T15:35:50.109677 #49107] DEBUG -- :   [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.110126 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:50.155480 #49107] DEBUG -- :   [1m[35m (35.3ms)[0m  [1m[35mCREATE TABLE `players` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `is_hero` tinyint(1), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_players_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:50.156359 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.158716 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112013941')[0m
+D, [2018-11-28T15:35:50.159491 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.160232 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:50.196961 #49107] DEBUG -- :   [1m[35m (33.0ms)[0m  [1m[35mCREATE TABLE `weapons` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `type` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:50.198774 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.214835 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (5.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014354')[0m
+D, [2018-11-28T15:35:50.218148 #49107] DEBUG -- :   [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.218860 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:50.254225 #49107] DEBUG -- :   [1m[35m (32.3ms)[0m  [1m[35mCREATE TABLE `accounts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_accounts_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:50.257921 #49107] DEBUG -- :   [1m[35m (3.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.260466 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014410')[0m
+D, [2018-11-28T15:35:50.261429 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.261879 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:50.293911 #49107] DEBUG -- :   [1m[35m (26.2ms)[0m  [1m[35mCREATE TABLE `credit_cards` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `expire_date` date, `after_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_credit_cards_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:50.296539 #49107] DEBUG -- :   [1m[35m (1.5ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.300502 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (1.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014431')[0m
+D, [2018-11-28T15:35:50.302127 #49107] DEBUG -- :   [1m[35m (1.2ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.302686 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:50.334272 #49107] DEBUG -- :   [1m[35m (29.8ms)[0m  [1m[35mCREATE TABLE `potions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:50.335542 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.340436 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095440')[0m
+D, [2018-11-28T15:35:50.358771 #49107] DEBUG -- :   [1m[35m (17.8ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.359328 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:50.392353 #49107] DEBUG -- :   [1m[35m (23.2ms)[0m  [1m[35mCREATE TABLE `items` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `player_id` bigint, `item_type` varchar(255), `item_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_items_on_player_id`  (`player_id`))[0m
+D, [2018-11-28T15:35:50.393951 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.395683 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095853')[0m
+D, [2018-11-28T15:35:50.396974 #49107] DEBUG -- :   [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.407903 #49107] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (3.1ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+D, [2018-11-28T15:35:50.417250 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.421305 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.422197 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:50.434919 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.436981 #49107] DEBUG -- :   [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO `users` (`name`, `age`, `created_at`, `updated_at`) VALUES ('SimpleCache user', 1, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.437734 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.455101 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.457716 #49107] DEBUG -- :   [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.459679 #49107] DEBUG -- :   [1m[36mPlayer Create (0.4ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player1', TRUE, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.460452 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.461483 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.463672 #49107] DEBUG -- :   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.465568 #49107] DEBUG -- :   [1m[36mPlayer Create (0.5ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player2', FALSE, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.466412 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.468013 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.469415 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.471223 #49107] DEBUG -- :   [1m[36mPlayer Create (0.4ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player3', FALSE, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.477857 #49107] DEBUG -- :   [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.503101 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.504918 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword1', 'Weapon::Sword', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.505518 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.510631 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.511891 #49107] DEBUG -- :   [1m[36mWeapon::Armor Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache armor1', 'Weapon::Armor', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.512576 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.513269 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.514327 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword2', 'Weapon::Sword', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.514903 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.520471 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.521732 #49107] DEBUG -- :   [1m[36mPotion Create (0.3ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache hp1', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.522330 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.522923 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.524141 #49107] DEBUG -- :   [1m[36mPotion Create (0.3ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache mp1', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.524745 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.525296 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.526390 #49107] DEBUG -- :   [1m[36mPotion Create (0.3ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache antidote1', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.526965 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.536481 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.537643 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.539559 #49107] DEBUG -- :   [1m[36mItem Create (0.9ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.540178 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.540929 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.541942 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.543190 #49107] DEBUG -- :   [1m[36mItem Create (0.3ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Potion', 1, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.543848 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.544580 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.545339 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.546612 #49107] DEBUG -- :   [1m[36mItem Create (0.4ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.547223 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.557675 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.558900 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.560245 #49107] DEBUG -- :   [1m[36mAccount Create (0.4ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `name`, `created_at`, `updated_at`) VALUES (1, 'Account name', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.560949 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.571506 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.572539 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.573886 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2018-10-10', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.574500 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.575173 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.576310 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.577540 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'MUFG Mater Card', '2030-11-11', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.578519 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.579705 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.581093 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.582337 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2030-10-10', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.583408 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.585015 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.3ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 3 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:50.585681 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.587780 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.591280 #49107] DEBUG -- :   [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.596374 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.604827 #49107] DEBUG -- :   [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.614288 #49107] DEBUG -- :   [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.619515 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.621769 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.623144 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.624528 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.630089 #49107] DEBUG -- :   [1m[36mUser Update (1.3ms)[0m  [1m[33mUPDATE `users` SET `name` = 'changed name' WHERE `users`.`id` = 1[0m
+D, [2018-11-28T15:35:50.639100 #49107] DEBUG -- :   [1m[35m (8.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.655759 #49107] DEBUG -- :   [1m[36mPlayer Load (1.1ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:50.659913 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.661114 #49107] DEBUG -- :   [1m[36mUser Update (0.3ms)[0m  [1m[33mUPDATE `users` SET `name` = 'SimpleCache player1' WHERE `users`.`id` = 1[0m
+D, [2018-11-28T15:35:50.661850 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.663643 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.664079 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.667784 #49107] DEBUG -- :   [1m[36mUser Update (1.8ms)[0m  [1m[33mUPDATE `users` SET `name` = 'changed name' WHERE `users`.`id` = 1[0m
+D, [2018-11-28T15:35:50.668724 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.670124 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.674895 #49107] DEBUG -- :   [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.676009 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.677491 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.679252 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.684769 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:50.685270 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.686532 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.687775 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:50.690643 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:50.696715 #49107] DEBUG -- :   [1m[35m (1.8ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:50.697395 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:50.713228 #49107] DEBUG -- :   [1m[35m (11.1ms)[0m  [1m[35mDROP TABLE `items`[0m
+D, [2018-11-28T15:35:50.718584 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (3.8ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095853'[0m
+I, [2018-11-28T15:35:50.718702 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:50.730092 #49107] DEBUG -- :   [1m[35m (10.7ms)[0m  [1m[35mDROP TABLE `potions`[0m
+D, [2018-11-28T15:35:50.736965 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (5.5ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095440'[0m
+I, [2018-11-28T15:35:50.737070 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:50.740019 #49107] DEBUG -- :   [1m[35m (2.4ms)[0m  [1m[35mDROP TABLE `credit_cards`[0m
+D, [2018-11-28T15:35:50.741433 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.7ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014431'[0m
+I, [2018-11-28T15:35:50.741502 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:50.747688 #49107] DEBUG -- :   [1m[35m (5.8ms)[0m  [1m[35mDROP TABLE `accounts`[0m
+D, [2018-11-28T15:35:50.750305 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (1.1ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014410'[0m
+I, [2018-11-28T15:35:50.750393 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:50.756377 #49107] DEBUG -- :   [1m[35m (5.5ms)[0m  [1m[35mDROP TABLE `weapons`[0m
+D, [2018-11-28T15:35:50.757559 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014354'[0m
+I, [2018-11-28T15:35:50.757640 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:50.766631 #49107] DEBUG -- :   [1m[35m (8.2ms)[0m  [1m[35mDROP TABLE `players`[0m
+D, [2018-11-28T15:35:50.768149 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.7ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112013941'[0m
+I, [2018-11-28T15:35:50.768223 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:50.774329 #49107] DEBUG -- :   [1m[35m (5.7ms)[0m  [1m[35mDROP TABLE `users`[0m
+D, [2018-11-28T15:35:50.778841 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (3.2ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181111071536'[0m
+D, [2018-11-28T15:35:50.779474 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:50.785139 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:50.786790 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:50.786930 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:50.810162 #49107] DEBUG -- :   [1m[35m (20.7ms)[0m  [1m[35mCREATE TABLE `users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `age` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:50.811233 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.813337 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181111071536')[0m
+D, [2018-11-28T15:35:50.814033 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.814316 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:50.835769 #49107] DEBUG -- :   [1m[35m (19.8ms)[0m  [1m[35mCREATE TABLE `players` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `is_hero` tinyint(1), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_players_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:50.838534 #49107] DEBUG -- :   [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.840104 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112013941')[0m
+D, [2018-11-28T15:35:50.840980 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.842160 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:50.861374 #49107] DEBUG -- :   [1m[35m (16.8ms)[0m  [1m[35mCREATE TABLE `weapons` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `type` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:50.862478 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.863676 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014354')[0m
+D, [2018-11-28T15:35:50.864254 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.864542 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:50.884648 #49107] DEBUG -- :   [1m[35m (18.4ms)[0m  [1m[35mCREATE TABLE `accounts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_accounts_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:50.885465 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.889248 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014410')[0m
+D, [2018-11-28T15:35:50.889935 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.890306 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:50.913321 #49107] DEBUG -- :   [1m[35m (21.1ms)[0m  [1m[35mCREATE TABLE `credit_cards` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `expire_date` date, `after_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_credit_cards_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:50.913984 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.915292 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014431')[0m
+D, [2018-11-28T15:35:50.915966 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.916392 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:50.931084 #49107] DEBUG -- :   [1m[35m (14.1ms)[0m  [1m[35mCREATE TABLE `potions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:50.931986 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.933347 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095440')[0m
+D, [2018-11-28T15:35:50.934018 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:50.934534 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:50.953680 #49107] DEBUG -- :   [1m[35m (15.1ms)[0m  [1m[35mCREATE TABLE `items` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `player_id` bigint, `item_type` varchar(255), `item_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_items_on_player_id`  (`player_id`))[0m
+D, [2018-11-28T15:35:50.955078 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.956190 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095853')[0m
+D, [2018-11-28T15:35:50.956681 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.958506 #49107] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+D, [2018-11-28T15:35:50.960604 #49107] DEBUG -- :   [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.962688 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.963327 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:50.964084 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.966637 #49107] DEBUG -- :   [1m[36mUser Create (1.1ms)[0m  [1m[32mINSERT INTO `users` (`name`, `age`, `created_at`, `updated_at`) VALUES ('SimpleCache user', 1, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.967826 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.970769 #49107] DEBUG -- :   [1m[35m (1.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.972103 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.977074 #49107] DEBUG -- :   [1m[36mPlayer Create (2.7ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player1', TRUE, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.978237 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.979409 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.980686 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.982170 #49107] DEBUG -- :   [1m[36mPlayer Create (0.4ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player2', FALSE, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.982986 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.983808 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.986207 #49107] DEBUG -- :   [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:50.988643 #49107] DEBUG -- :   [1m[36mPlayer Create (0.3ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player3', FALSE, '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.989258 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.990077 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.991613 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.6ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword1', 'Weapon::Sword', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.992206 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.992977 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.994171 #49107] DEBUG -- :   [1m[36mWeapon::Armor Create (0.2ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache armor1', 'Weapon::Armor', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.994778 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.995478 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:50.996690 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword2', 'Weapon::Sword', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:50.997381 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:50.998013 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.000005 #49107] DEBUG -- :   [1m[36mPotion Create (0.9ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache hp1', '2018-11-28 06:35:50', '2018-11-28 06:35:50')[0m
+D, [2018-11-28T15:35:51.001128 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.001993 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.003359 #49107] DEBUG -- :   [1m[36mPotion Create (0.3ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache mp1', '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.003968 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.004578 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.005572 #49107] DEBUG -- :   [1m[36mPotion Create (0.2ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache antidote1', '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.006082 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.006758 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.007547 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.009241 #49107] DEBUG -- :   [1m[36mItem Create (0.8ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.009837 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.010531 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.011521 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.014079 #49107] DEBUG -- :   [1m[36mItem Create (0.5ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Potion', 1, '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.014865 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.015748 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.016668 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.017845 #49107] DEBUG -- :   [1m[36mItem Create (0.3ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.018435 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.019132 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.019963 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.021304 #49107] DEBUG -- :   [1m[36mAccount Create (0.5ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `name`, `created_at`, `updated_at`) VALUES (1, 'Account name', '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.021803 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.022497 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.023806 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.7ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.025098 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2018-10-10', '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.025740 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.026555 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.027360 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.028500 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'MUFG Mater Card', '2030-11-11', '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.029152 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.030370 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.031174 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.032472 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2030-10-10', '2018-11-28 06:35:51', '2018-11-28 06:35:51')[0m
+D, [2018-11-28T15:35:51.033439 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:51.034581 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.3ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 3 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:51.035212 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.036947 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.039250 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.040928 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.042591 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.045666 #49107] DEBUG -- :   [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.047599 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.050166 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.051542 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` ASC LIMIT 1[0m
+D, [2018-11-28T15:35:51.053538 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.057891 #49107] DEBUG -- :   [1m[36mPlayer Load (0.6ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.062059 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.064764 #49107] DEBUG -- :   [1m[36mPlayer Load (1.1ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.069693 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.072748 #49107] DEBUG -- :   [1m[36mPlayer Load (1.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.077229 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.079382 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.080598 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.085190 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.089366 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.094880 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.096395 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.097578 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.098522 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.102309 #49107] DEBUG -- :   [1m[36mPlayer Update (1.2ms)[0m  [1m[33mUPDATE `players` SET `name` = 'changed name', `updated_at` = '2018-11-28 06:35:51' WHERE `players`.`id` = 1[0m
+D, [2018-11-28T15:35:51.106044 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.118639 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.119545 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.120952 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.122174 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.123840 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.127788 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.135330 #49107] DEBUG -- :   [1m[36mPlayer Load (6.2ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.143472 #49107] DEBUG -- :   [1m[35m (1.6ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.145362 #49107] DEBUG -- :   [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.148484 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.151075 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.155163 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.157754 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.158621 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.159841 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.161074 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.162785 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.165453 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.168620 #49107] DEBUG -- :   [1m[36mPlayer Load (1.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.172759 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.173876 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.179159 #49107] DEBUG -- :   [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.181011 #49107] DEBUG -- :   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.183583 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.185328 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.189007 #49107] DEBUG -- :   [1m[36mPlayer Load (1.7ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.192812 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.193719 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.194865 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.195666 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.196650 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.198735 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.201669 #49107] DEBUG -- :   [1m[36mPlayer Load (0.6ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.204793 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.205725 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.217435 #49107] DEBUG -- :   [1m[36mUser Load (2.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.218838 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.220316 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.221645 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.228430 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.235641 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.236473 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.237956 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.239215 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.240817 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.243576 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.246248 #49107] DEBUG -- :   [1m[36mPlayer Load (1.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.251885 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.253010 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.259584 #49107] DEBUG -- :   [1m[36mUser Load (3.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.263167 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.274708 #49107] DEBUG -- :   [1m[35m (9.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.276777 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.280232 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.285163 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.286113 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.287356 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.288495 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.289989 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.292253 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.294244 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.298545 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.304596 #49107] DEBUG -- :   [1m[36mPlayer Load (0.8ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.313003 #49107] DEBUG -- :   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.321442 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.329185 #49107] DEBUG -- :   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.333893 #49107] DEBUG -- :   [1m[36mPlayer Load (1.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.339936 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.344021 #49107] DEBUG -- :   [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.345877 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.347374 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.351012 #49107] DEBUG -- :   [1m[36mPlayer Update (0.7ms)[0m  [1m[33mUPDATE `players` SET `name` = 'changed name', `updated_at` = '2018-11-28 06:35:51' WHERE `players`.`id` = 2[0m
+D, [2018-11-28T15:35:51.355146 #49107] DEBUG -- :   [1m[35m (3.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.357012 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.357738 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.358614 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.359586 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.360856 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.363132 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.366781 #49107] DEBUG -- :   [1m[36mPlayer Load (1.1ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.371342 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.375178 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.376914 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.379000 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.380859 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.382410 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.383273 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.385598 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.389235 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.390456 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.392593 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.395175 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.404101 #49107] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.405528 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.407631 #49107] DEBUG -- :   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.408918 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.410382 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.412113 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.414603 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.419894 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.420523 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.421382 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.422246 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.423273 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.424994 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.426891 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.429197 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.430147 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.431397 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.437456 #49107] DEBUG -- :   [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.439539 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.441952 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.443744 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.447867 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.451400 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.452674 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.453674 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.454783 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.456706 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.458865 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.462082 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.463112 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.468458 #49107] DEBUG -- :   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.470667 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.472719 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.474439 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.476756 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:51.481687 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.485285 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.486304 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.487240 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.488452 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.491587 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.493972 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.502289 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.505124 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.507638 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.511754 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.515150 #49107] DEBUG -- :   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.520590 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.523760 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.528899 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.532707 #49107] DEBUG -- :   [1m[36mPlayer Load (1.6ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.539306 #49107] DEBUG -- :   [1m[36mPlayer Load (2.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.540704 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.541702 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.545239 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.546716 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.548314 #49107] DEBUG -- :   [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.550030 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.551782 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.555493 #49107] DEBUG -- :   [1m[36mPlayer Load (0.7ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.556845 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.557852 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.558182 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.558734 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.559501 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.560170 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.561196 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.562983 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.564610 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.568455 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.572493 #49107] DEBUG -- :   [1m[36mPlayer Load (1.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.573003 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.573904 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.575230 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.576215 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.577244 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.578704 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.579797 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.582575 #49107] DEBUG -- :   [1m[36mPlayer Load (1.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.583648 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.583991 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.584544 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.585339 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.586041 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.587052 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.588806 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.590384 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.592815 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.596358 #49107] DEBUG -- :   [1m[36mPlayer Load (2.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.597835 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.599683 #49107] DEBUG -- :   [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.601265 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.602453 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.606618 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.608082 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.609815 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.612814 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.613792 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.614627 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.615651 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.616131 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.616911 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.617930 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.618762 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.620112 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.622099 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.625245 #49107] DEBUG -- :   [1m[36mPlayer Load (0.6ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.633551 #49107] DEBUG -- :   [1m[36mPlayer Load (1.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.635203 #49107] DEBUG -- :   [1m[36mPlayer Load (0.7ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.637011 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.638052 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.639148 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.640092 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.641413 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.642692 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.644162 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.648257 #49107] DEBUG -- :   [1m[36mPlayer Load (0.9ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.651166 #49107] DEBUG -- :   [1m[36mPlayer Load (0.7ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.652709 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.653116 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.654014 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.655137 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.655968 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.657023 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.658736 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.660415 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.663219 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.668090 #49107] DEBUG -- :   [1m[36mPlayer Load (0.6ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.670363 #49107] DEBUG -- :   [1m[35m (1.7ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.671932 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.673495 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.674641 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.675826 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.677145 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.678494 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.683028 #49107] DEBUG -- :   [1m[36mPlayer Load (1.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.683931 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.684597 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = TRUE LIMIT 1[0m
+D, [2018-11-28T15:35:51.684873 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.685425 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.686295 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.687065 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.688144 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.690209 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.692093 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.693852 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.698531 #49107] DEBUG -- :   [1m[36mPlayer Load (0.7ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.704819 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.706397 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.707194 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.712139 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.720973 #49107] DEBUG -- :   [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.723162 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.728547 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.730556 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.731287 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.732218 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.735948 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.740509 #49107] DEBUG -- :   [1m[36mUser Load (2.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.746019 #49107] DEBUG -- :   [1m[36mPlayer Update (0.5ms)[0m  [1m[33mUPDATE `players` SET `name` = 'kkk' WHERE `players`.`id` = 1[0m
+D, [2018-11-28T15:35:51.748443 #49107] DEBUG -- :   [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.750274 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.754114 #49107] DEBUG -- :   [1m[36mPlayer Load (1.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.760254 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.761759 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.762348 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.762961 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.763778 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.764472 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.765808 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.767275 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.768549 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.778988 #49107] DEBUG -- :   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.780806 #49107] DEBUG -- :   [1m[36mPlayer Load (0.3ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.781387 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.782067 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.783251 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.784538 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.788253 #49107] DEBUG -- :   [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.793103 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.794630 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.797616 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.800331 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.806301 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.807230 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.810393 #49107] DEBUG -- :   [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.812154 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.813496 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:51.814826 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:51.816311 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:51.817679 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:51.823164 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` LIMIT 1[0m
+D, [2018-11-28T15:35:51.824747 #49107] DEBUG -- :   [1m[36mItem Load (0.3ms)[0m  [1m[34mSELECT `items`.* FROM `items` WHERE `items`.`player_id` = 1[0m
+D, [2018-11-28T15:35:51.831794 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT  `players`.* FROM `players` LIMIT 1[0m
+D, [2018-11-28T15:35:51.836953 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:51.838351 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:51.838567 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:51.844795 #49107] DEBUG -- :   [1m[35m (5.8ms)[0m  [1m[35mDROP TABLE `items`[0m
+D, [2018-11-28T15:35:51.846362 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.8ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095853'[0m
+I, [2018-11-28T15:35:51.846468 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:51.853030 #49107] DEBUG -- :   [1m[35m (5.9ms)[0m  [1m[35mDROP TABLE `potions`[0m
+D, [2018-11-28T15:35:51.854267 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095440'[0m
+I, [2018-11-28T15:35:51.854352 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:51.860236 #49107] DEBUG -- :   [1m[35m (5.0ms)[0m  [1m[35mDROP TABLE `credit_cards`[0m
+D, [2018-11-28T15:35:51.862845 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.8ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014431'[0m
+I, [2018-11-28T15:35:51.862969 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:51.869046 #49107] DEBUG -- :   [1m[35m (5.5ms)[0m  [1m[35mDROP TABLE `accounts`[0m
+D, [2018-11-28T15:35:51.873053 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (2.2ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014410'[0m
+I, [2018-11-28T15:35:51.873158 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:51.875845 #49107] DEBUG -- :   [1m[35m (2.2ms)[0m  [1m[35mDROP TABLE `weapons`[0m
+D, [2018-11-28T15:35:51.880027 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (2.3ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014354'[0m
+I, [2018-11-28T15:35:51.880087 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:51.884114 #49107] DEBUG -- :   [1m[35m (3.6ms)[0m  [1m[35mDROP TABLE `players`[0m
+D, [2018-11-28T15:35:51.885586 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112013941'[0m
+I, [2018-11-28T15:35:51.885686 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:51.890514 #49107] DEBUG -- :   [1m[35m (4.4ms)[0m  [1m[35mDROP TABLE `users`[0m
+D, [2018-11-28T15:35:51.892206 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.8ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181111071536'[0m
+D, [2018-11-28T15:35:51.894120 #49107] DEBUG -- :   [1m[35m (1.2ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:51.898929 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:51.901560 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:51.901727 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:51.928159 #49107] DEBUG -- :   [1m[35m (25.0ms)[0m  [1m[35mCREATE TABLE `users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `age` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:51.928968 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.930092 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181111071536')[0m
+D, [2018-11-28T15:35:51.930657 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:51.930937 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:51.947227 #49107] DEBUG -- :   [1m[35m (15.1ms)[0m  [1m[35mCREATE TABLE `players` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `is_hero` tinyint(1), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_players_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:51.947802 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.949170 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112013941')[0m
+D, [2018-11-28T15:35:51.949975 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:51.950726 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:51.966736 #49107] DEBUG -- :   [1m[35m (15.2ms)[0m  [1m[35mCREATE TABLE `weapons` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `type` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:51.967562 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.970356 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (1.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014354')[0m
+D, [2018-11-28T15:35:51.972208 #49107] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:51.972570 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:51.992741 #49107] DEBUG -- :   [1m[35m (17.2ms)[0m  [1m[35mCREATE TABLE `accounts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_accounts_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:51.993842 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:51.996078 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014410')[0m
+D, [2018-11-28T15:35:51.996845 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:51.997220 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:52.018176 #49107] DEBUG -- :   [1m[35m (19.7ms)[0m  [1m[35mCREATE TABLE `credit_cards` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `expire_date` date, `after_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_credit_cards_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:52.018993 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.023051 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014431')[0m
+D, [2018-11-28T15:35:52.024171 #49107] DEBUG -- :   [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.024545 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:52.039425 #49107] DEBUG -- :   [1m[35m (14.1ms)[0m  [1m[35mCREATE TABLE `potions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:52.042223 #49107] DEBUG -- :   [1m[35m (1.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.044130 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095440')[0m
+D, [2018-11-28T15:35:52.044883 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.045253 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:52.064599 #49107] DEBUG -- :   [1m[35m (17.4ms)[0m  [1m[35mCREATE TABLE `items` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `player_id` bigint, `item_type` varchar(255), `item_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_items_on_player_id`  (`player_id`))[0m
+D, [2018-11-28T15:35:52.065236 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.066580 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095853')[0m
+D, [2018-11-28T15:35:52.067281 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.069319 #49107] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+D, [2018-11-28T15:35:52.069880 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.073448 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.074176 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:52.076381 #49107] DEBUG -- :   [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.079685 #49107] DEBUG -- :   [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO `users` (`name`, `age`, `created_at`, `updated_at`) VALUES ('SimpleCache user', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.080824 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.081696 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.082807 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.086503 #49107] DEBUG -- :   [1m[36mPlayer Create (2.2ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player1', TRUE, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.088425 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.089253 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.090221 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.091306 #49107] DEBUG -- :   [1m[36mPlayer Create (0.2ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player2', FALSE, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.091903 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.092505 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.093291 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.094339 #49107] DEBUG -- :   [1m[36mPlayer Create (0.2ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player3', FALSE, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.094940 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.095612 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.097026 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.6ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword1', 'Weapon::Sword', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.097617 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.098304 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.099973 #49107] DEBUG -- :   [1m[36mWeapon::Armor Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache armor1', 'Weapon::Armor', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.100645 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.101379 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.102534 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.2ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword2', 'Weapon::Sword', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.103154 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.103730 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.105148 #49107] DEBUG -- :   [1m[36mPotion Create (0.5ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache hp1', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.105748 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.106459 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.107525 #49107] DEBUG -- :   [1m[36mPotion Create (0.2ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache mp1', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.108080 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.108656 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.109689 #49107] DEBUG -- :   [1m[36mPotion Create (0.2ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache antidote1', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.110215 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.110891 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.111705 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.113135 #49107] DEBUG -- :   [1m[36mItem Create (0.6ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.113701 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.114373 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.115188 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.116354 #49107] DEBUG -- :   [1m[36mItem Create (0.2ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Potion', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.116975 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.117744 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.118544 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.119624 #49107] DEBUG -- :   [1m[36mItem Create (0.2ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.120237 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.120920 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.121766 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.123120 #49107] DEBUG -- :   [1m[36mAccount Create (0.5ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `name`, `created_at`, `updated_at`) VALUES (1, 'Account name', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.123676 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.124392 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.125498 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.5ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.126619 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.2ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2018-10-10', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.127245 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.127865 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.128569 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.129695 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.2ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'MUFG Mater Card', '2030-11-11', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.130423 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.131166 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.131853 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.132909 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.2ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2030-10-10', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.133780 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.134795 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.3ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 3 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:52.135533 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.137638 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.139691 #49107] DEBUG -- :   [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`user_id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:52.142227 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.149626 #49107] DEBUG -- :   [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.153152 #49107] DEBUG -- :   [1m[36mAccount Load (1.8ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`user_id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:52.155505 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.157458 #49107] DEBUG -- :   [1m[36mAccount Load (0.5ms)[0m  [1m[34mSELECT  `accounts`.* FROM `accounts` WHERE `accounts`.`user_id` = 1 LIMIT 1[0m
+D, [2018-11-28T15:35:52.170550 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.172254 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.4ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` DESC LIMIT 1[0m
+D, [2018-11-28T15:35:52.174292 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`after_id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.176859 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.4ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` ASC LIMIT 1[0m
+D, [2018-11-28T15:35:52.181570 #49107] DEBUG -- :   [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.184580 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.9ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` DESC LIMIT 1[0m
+D, [2018-11-28T15:35:52.190659 #49107] DEBUG -- :   [1m[36mCreditCard Load (3.1ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`after_id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.193628 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.195390 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.5ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` DESC LIMIT 1[0m
+D, [2018-11-28T15:35:52.197208 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`after_id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.200015 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.202898 #49107] DEBUG -- :   [1m[36mCreditCard Load (1.0ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` DESC LIMIT 1[0m
+D, [2018-11-28T15:35:52.207250 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.7ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`after_id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.208644 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.213186 #49107] DEBUG -- :   [1m[36mCreditCard Load (1.1ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.216951 #49107] DEBUG -- :   [1m[36mCreditCard Update (1.6ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 2 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:52.219052 #49107] DEBUG -- :   [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.220396 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.221460 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.4ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` = 2 LIMIT 1[0m
+D, [2018-11-28T15:35:52.226738 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.5ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 3 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:52.227974 #49107] DEBUG -- :   [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.230623 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.232279 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.4ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`user_id` = 1 ORDER BY `credit_cards`.`id` DESC LIMIT 1[0m
+D, [2018-11-28T15:35:52.237274 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.4ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`after_id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.238863 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.239864 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` = 3 LIMIT 1[0m
+D, [2018-11-28T15:35:52.241370 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.4ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 2 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:52.244559 #49107] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.246286 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.247256 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.4ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` = 2 LIMIT 1[0m
+D, [2018-11-28T15:35:52.249456 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.4ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 3 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:52.250109 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.255377 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:52.256585 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:52.256712 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:52.259097 #49107] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE `items`[0m
+D, [2018-11-28T15:35:52.260222 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095853'[0m
+I, [2018-11-28T15:35:52.260332 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:52.266267 #49107] DEBUG -- :   [1m[35m (5.4ms)[0m  [1m[35mDROP TABLE `potions`[0m
+D, [2018-11-28T15:35:52.272963 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (5.5ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095440'[0m
+I, [2018-11-28T15:35:52.273074 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:52.275738 #49107] DEBUG -- :   [1m[35m (2.2ms)[0m  [1m[35mDROP TABLE `credit_cards`[0m
+D, [2018-11-28T15:35:52.276992 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.5ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014431'[0m
+I, [2018-11-28T15:35:52.277045 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:52.279799 #49107] DEBUG -- :   [1m[35m (2.4ms)[0m  [1m[35mDROP TABLE `accounts`[0m
+D, [2018-11-28T15:35:52.281444 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.7ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014410'[0m
+I, [2018-11-28T15:35:52.281544 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:52.286913 #49107] DEBUG -- :   [1m[35m (4.8ms)[0m  [1m[35mDROP TABLE `weapons`[0m
+D, [2018-11-28T15:35:52.288172 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.5ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014354'[0m
+I, [2018-11-28T15:35:52.288222 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:52.290381 #49107] DEBUG -- :   [1m[35m (1.8ms)[0m  [1m[35mDROP TABLE `players`[0m
+D, [2018-11-28T15:35:52.293388 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (1.9ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112013941'[0m
+I, [2018-11-28T15:35:52.293626 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:52.297734 #49107] DEBUG -- :   [1m[35m (3.3ms)[0m  [1m[35mDROP TABLE `users`[0m
+D, [2018-11-28T15:35:52.299818 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (1.1ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181111071536'[0m
+D, [2018-11-28T15:35:52.300374 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:52.305958 #49107] DEBUG -- :   [1m[35m (1.6ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:52.307875 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:52.308076 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:52.329038 #49107] DEBUG -- :   [1m[35m (20.1ms)[0m  [1m[35mCREATE TABLE `users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `age` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:52.330100 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.331273 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181111071536')[0m
+D, [2018-11-28T15:35:52.331813 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.332127 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:52.351473 #49107] DEBUG -- :   [1m[35m (17.4ms)[0m  [1m[35mCREATE TABLE `players` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `is_hero` tinyint(1), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_players_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:52.352189 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.355448 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112013941')[0m
+D, [2018-11-28T15:35:52.356055 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.356693 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:52.376895 #49107] DEBUG -- :   [1m[35m (18.7ms)[0m  [1m[35mCREATE TABLE `weapons` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `type` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:52.377445 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.378865 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014354')[0m
+D, [2018-11-28T15:35:52.379502 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.379799 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:52.398195 #49107] DEBUG -- :   [1m[35m (17.4ms)[0m  [1m[35mCREATE TABLE `accounts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_accounts_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:52.399060 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.401154 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014410')[0m
+D, [2018-11-28T15:35:52.402026 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.402548 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:52.427445 #49107] DEBUG -- :   [1m[35m (21.2ms)[0m  [1m[35mCREATE TABLE `credit_cards` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` bigint, `name` varchar(255), `expire_date` date, `after_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_credit_cards_on_user_id`  (`user_id`))[0m
+D, [2018-11-28T15:35:52.428232 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.429598 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181112014431')[0m
+D, [2018-11-28T15:35:52.430200 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.430491 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:52.447624 #49107] DEBUG -- :   [1m[35m (16.6ms)[0m  [1m[35mCREATE TABLE `potions` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+D, [2018-11-28T15:35:52.448288 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.449724 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095440')[0m
+D, [2018-11-28T15:35:52.450704 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-11-28T15:35:52.451194 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:52.471798 #49107] DEBUG -- :   [1m[35m (14.8ms)[0m  [1m[35mCREATE TABLE `items` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `player_id` bigint, `item_type` varchar(255), `item_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_items_on_player_id`  (`player_id`))[0m
+D, [2018-11-28T15:35:52.473246 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.474406 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181113095853')[0m
+D, [2018-11-28T15:35:52.477481 #49107] DEBUG -- :   [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.479431 #49107] DEBUG -- :   [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+D, [2018-11-28T15:35:52.479994 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.481551 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.482161 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
+D, [2018-11-28T15:35:52.482738 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.484797 #49107] DEBUG -- :   [1m[36mUser Create (0.9ms)[0m  [1m[32mINSERT INTO `users` (`name`, `age`, `created_at`, `updated_at`) VALUES ('SimpleCache user', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.485685 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.486996 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.490289 #49107] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.495084 #49107] DEBUG -- :   [1m[36mPlayer Create (0.9ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player1', TRUE, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.496221 #49107] DEBUG -- :   [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.497359 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.498298 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.499716 #49107] DEBUG -- :   [1m[36mPlayer Create (0.4ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player2', FALSE, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.500725 #49107] DEBUG -- :   [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.501668 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.505155 #49107] DEBUG -- :   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.506383 #49107] DEBUG -- :   [1m[36mPlayer Create (0.3ms)[0m  [1m[32mINSERT INTO `players` (`user_id`, `name`, `is_hero`, `created_at`, `updated_at`) VALUES (1, 'SimpleCache player3', FALSE, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.507037 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.507776 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.509168 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.6ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword1', 'Weapon::Sword', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.509745 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.510704 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.512035 #49107] DEBUG -- :   [1m[36mWeapon::Armor Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache armor1', 'Weapon::Armor', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.512730 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.513470 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.514628 #49107] DEBUG -- :   [1m[36mWeapon::Sword Create (0.3ms)[0m  [1m[32mINSERT INTO `weapons` (`name`, `type`, `created_at`, `updated_at`) VALUES ('SimpleCache sword2', 'Weapon::Sword', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.515255 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.516150 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.517805 #49107] DEBUG -- :   [1m[36mPotion Create (0.7ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache hp1', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.518412 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.519039 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.520133 #49107] DEBUG -- :   [1m[36mPotion Create (0.2ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache mp1', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.520701 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.521219 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.522180 #49107] DEBUG -- :   [1m[36mPotion Create (0.2ms)[0m  [1m[32mINSERT INTO `potions` (`name`, `created_at`, `updated_at`) VALUES ('SimpleCache antidote1', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.522742 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.523502 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.524413 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.525929 #49107] DEBUG -- :   [1m[36mItem Create (0.6ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.526700 #49107] DEBUG -- :   [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.527443 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.528361 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.529469 #49107] DEBUG -- :   [1m[36mItem Create (0.2ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Potion', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.530314 #49107] DEBUG -- :   [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.531469 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.532486 #49107] DEBUG -- :   [1m[36mPlayer Load (0.2ms)[0m  [1m[34mSELECT  `players`.* FROM `players` WHERE `players`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.533829 #49107] DEBUG -- :   [1m[36mItem Create (0.3ms)[0m  [1m[32mINSERT INTO `items` (`player_id`, `item_type`, `item_id`, `created_at`, `updated_at`) VALUES (1, 'Weapon', 1, '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.534449 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.535192 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.536102 #49107] DEBUG -- :   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.537798 #49107] DEBUG -- :   [1m[36mAccount Create (0.8ms)[0m  [1m[32mINSERT INTO `accounts` (`user_id`, `name`, `created_at`, `updated_at`) VALUES (1, 'Account name', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.538491 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.539308 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.540661 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.7ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.542066 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2018-10-10', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.542691 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.543356 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.544211 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.545398 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.3ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'MUFG Mater Card', '2030-11-11', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.546225 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.546993 #49107] DEBUG -- :   [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+D, [2018-11-28T15:35:52.552074 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.3ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.553290 #49107] DEBUG -- :   [1m[36mCreditCard Create (0.2ms)[0m  [1m[32mINSERT INTO `credit_cards` (`user_id`, `name`, `expire_date`, `created_at`, `updated_at`) VALUES (1, 'Epos Visa Card', '2030-10-10', '2018-11-28 06:35:52', '2018-11-28 06:35:52')[0m
+D, [2018-11-28T15:35:52.554330 #49107] DEBUG -- :   [1m[36mCreditCard Load (0.2ms)[0m  [1m[34mSELECT  `credit_cards`.* FROM `credit_cards` WHERE `credit_cards`.`id` IS NULL LIMIT 1[0m
+D, [2018-11-28T15:35:52.555508 #49107] DEBUG -- :   [1m[36mCreditCard Update (0.3ms)[0m  [1m[33mUPDATE `credit_cards` SET `after_id` = 3 WHERE `credit_cards`.`id` = 1[0m
+D, [2018-11-28T15:35:52.556251 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-11-28T15:35:52.557942 #49107] DEBUG -- :   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  `users`.* FROM `users` LIMIT 1[0m
+D, [2018-11-28T15:35:52.559719 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:52.564866 #49107] DEBUG -- :   [1m[36mPlayer Load (0.5ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1[0m
+D, [2018-11-28T15:35:52.574441 #49107] DEBUG -- :   [1m[36mPlayer Load (0.4ms)[0m  [1m[34mSELECT `players`.* FROM `players` WHERE `players`.`user_id` = 1 AND `players`.`is_hero` = FALSE[0m
+D, [2018-11-28T15:35:52.578343 #49107] DEBUG -- :   [1m[36mItem Load (0.3ms)[0m  [1m[34mSELECT `items`.* FROM `items` WHERE `items`.`player_id` = 1[0m
+D, [2018-11-28T15:35:52.589659 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT GET_LOCK('480011846105541855', 0)[0m
+D, [2018-11-28T15:35:52.591237 #49107] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+I, [2018-11-28T15:35:52.591448 #49107]  INFO -- : Migrating to CreateItems (20181113095853)
+D, [2018-11-28T15:35:52.594538 #49107] DEBUG -- :   [1m[35m (2.7ms)[0m  [1m[35mDROP TABLE `items`[0m
+D, [2018-11-28T15:35:52.595839 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095853'[0m
+I, [2018-11-28T15:35:52.595906 #49107]  INFO -- : Migrating to CreatePotions (20181113095440)
+D, [2018-11-28T15:35:52.610581 #49107] DEBUG -- :   [1m[35m (14.3ms)[0m  [1m[35mDROP TABLE `potions`[0m
+D, [2018-11-28T15:35:52.612477 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (1.2ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181113095440'[0m
+I, [2018-11-28T15:35:52.612556 #49107]  INFO -- : Migrating to CreateCreditCards (20181112014431)
+D, [2018-11-28T15:35:52.626071 #49107] DEBUG -- :   [1m[35m (12.9ms)[0m  [1m[35mDROP TABLE `credit_cards`[0m
+D, [2018-11-28T15:35:52.628153 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.8ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014431'[0m
+I, [2018-11-28T15:35:52.628251 #49107]  INFO -- : Migrating to CreateAccounts (20181112014410)
+D, [2018-11-28T15:35:52.630754 #49107] DEBUG -- :   [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE `accounts`[0m
+D, [2018-11-28T15:35:52.631951 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.5ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014410'[0m
+I, [2018-11-28T15:35:52.632040 #49107]  INFO -- : Migrating to CreateWeapons (20181112014354)
+D, [2018-11-28T15:35:52.636089 #49107] DEBUG -- :   [1m[35m (3.6ms)[0m  [1m[35mDROP TABLE `weapons`[0m
+D, [2018-11-28T15:35:52.640026 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (1.7ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112014354'[0m
+I, [2018-11-28T15:35:52.640103 #49107]  INFO -- : Migrating to CreatePlayers (20181112013941)
+D, [2018-11-28T15:35:52.644025 #49107] DEBUG -- :   [1m[35m (3.2ms)[0m  [1m[35mDROP TABLE `players`[0m
+D, [2018-11-28T15:35:52.647730 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.9ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181112013941'[0m
+I, [2018-11-28T15:35:52.647841 #49107]  INFO -- : Migrating to CreateUsers (20181111071536)
+D, [2018-11-28T15:35:52.652641 #49107] DEBUG -- :   [1m[35m (4.3ms)[0m  [1m[35mDROP TABLE `users`[0m
+D, [2018-11-28T15:35:52.654095 #49107] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20181111071536'[0m
+D, [2018-11-28T15:35:52.654504 #49107] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[34mSELECT RELEASE_LOCK('480011846105541855')[0m
