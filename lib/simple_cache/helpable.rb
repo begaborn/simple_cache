@@ -22,7 +22,7 @@ module SimpleCache
       @association_simple_cache[method_name] ||= simple_cache.fetch(&block)
     end
 
-    def reload
+    def reload(*)
       remove_instance_variable(:@association_simple_cache) if @association_simple_cache
       super
     end
