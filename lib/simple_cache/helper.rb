@@ -59,12 +59,19 @@ module SimpleCache
     end
 
     def lock_associations(base)
+      do_associations_cache(base) do |kls, id, name|
+        SimpleCache.lock(kls, id, name)
+      end
+    end
+
+    def do_associations_cache(base)
       base.class.inverse_reflections.each do |a_kls, arr|
         arr.each do |e|
-          target_model = a_kls.safe_constantize.find_by(id: base.send("#{e[:foreign_key]}_was"))
+          foreign_key = base.id.nil? ? e[:foreign_key] : "#{e[:foreign_key]}_was"
+          target_model = a_kls.safe_constantize.find_by(id: base.send(foreign_key))
           return if target_model.nil?
           self.locked_cache_model += [{model: target_model, name: e[:name]}]
-          SimpleCache.lock(target_model.class, target_model.id, e[:name])
+          yield(target_model.class, target_model.id, e[:name])
         end
       end
     end

@@ -144,6 +144,51 @@ RSpec.describe SimpleCache::HasMany do
       end
     end
 
+    context "when refreshing the objects after committing by creating" do
+      let(:cache_key) { SimpleCache.key(User, user.id, :p2) }
+
+      subject do
+        User.take.p2
+        Player.create(name: 'test', user: User.take, is_hero: false)
+        User.take.p2
+      end
+
+      after do
+        Player.last.delete
+      end
+
+      its(:size) { is_expected.to eq(3) }
+
+      it "should cache the association objects" do
+        cached_objects = subject
+        expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+      end
+    end
+
+    context "when refreshing the objects after committing by deleting" do
+      let(:cache_key) { SimpleCache.key(User, user.id, :p2) }
+
+      subject do
+        ActiveRecord::Base.transaction do
+          User.take.p2
+          p = Player.last
+          p.destroy
+        end
+        User.take.p2
+      end
+
+      after do
+        Player.create(name: 'test', user: User.take, is_hero: false)
+      end
+
+      its(:size) { is_expected.to eq(1) }
+
+      it "should cache the association objects" do
+        cached_objects = subject
+        expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+      end
+    end
+
     context "when specifying a block" do
       let(:cache_key) { SimpleCache.key(User, user.id, :p1) }
 

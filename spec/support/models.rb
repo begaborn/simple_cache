@@ -30,6 +30,7 @@ end
 class Player < ActiveRecord::Base
   has_many   :items
   belongs_to :user
+  use_find_cache false
 end
 
 class User < ActiveRecord::Base
