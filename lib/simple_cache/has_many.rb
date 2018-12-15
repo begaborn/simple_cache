@@ -28,8 +28,7 @@ module SimpleCache
         define_method(method_name) do
           self.cache_association_model(method_name) do
             association_collection_proxy = super()
-            association_collection_proxy.load_target
-            association_collection_proxy
+            association_collection_proxy.load
           end
         end
       end
