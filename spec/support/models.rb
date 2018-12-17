@@ -19,6 +19,7 @@ end
 
 class Item < ActiveRecord::Base
   belongs_to :player
+  belongs_to :hero, ->(o) { where(is_hero: true) }, class_name: :Player, foreign_key: :player_id
   belongs_to :item, polymorphic: true
 end
 
@@ -42,7 +43,7 @@ class User < ActiveRecord::Base
   end
 
   has_many :p2, -> { where(is_hero: false) }, class_name: :Player, foreign_key: :user_id
-  has_many :credit_cards, cache: false
+  #has_many :credit_cards, cache: false
   has_one  :account, cache: false
   has_one  :account_with_cache, class_name: :Account
 end

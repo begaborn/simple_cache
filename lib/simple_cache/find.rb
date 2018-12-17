@@ -2,9 +2,12 @@ module SimpleCache
   module Find
     extend ActiveSupport::Concern
 
+    attr_accessor :cache_self
+
     module ClassMethods
       def find(*args)
         return super if @use_find_cache == false
+
         method_name = __method__
         ids = args.flatten.compact.uniq
         return super if ids.size != 1 || block_given? || args.first.kind_of?(Array)

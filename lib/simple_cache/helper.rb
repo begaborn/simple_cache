@@ -5,14 +5,30 @@ module SimpleCache
     attr_reader :id
     attr_reader :method_name
 
-    def initialize(kls, id, method_name)
-        if kls.is_a?(Symbol) || kls.is_a?(String)
-          @kls = kls.to_s.constantize
-          @kls_name = kls
-        else
-          @kls = kls
-          @kls_name = kls.name.split('::').first.underscore
-        end
+    def self.add_reflections_for_belongs_to(base_model, belongs_to_model)
+      @reflection_for_belongs_to ||= {}
+      r = base_model.constantize.reflections[belongs_to_model.to_s]
+      @reflection_for_belongs_to[r.class_name] ||= []
+      @reflection_for_belongs_to[r.class_name] += [base_model]
+    end
+
+    def self.reflections_for_belongs_to_all
+      @reflection_for_belongs_to ||= {}
+    end
+
+    def self.reflections_for_belongs_to(model)
+      @reflection_for_belongs_to[model] ||= []
+    end
+
+    def initialize(kls = nil, id = nil, method_name = nil)
+      return if kls.nil?
+      if kls.is_a?(Symbol) || kls.is_a?(String)
+        @kls = kls.to_s.constantize
+        @kls_name = kls
+      else
+        @kls = kls
+        @kls_name = kls.name.split('::').first.underscore
+      end
 
       @id = id
       @method_name = method_name

@@ -5,6 +5,7 @@ require "simple_cache/helpable"
 require "simple_cache/auto_update"
 require "simple_cache/has_many"
 require "simple_cache/has_one"
+require "simple_cache/belongs_to"
 require "simple_cache/find"
 
 module SimpleCache
@@ -42,7 +43,7 @@ module SimpleCache
   end
 
   def self.not_allowed_options
-    [:as, :through, :primary_key, :source, :source_type, :inverse_of]
+    [:as, :through, :primary_key, :source, :source_type, :inverse_of, :polymorphic]
   end
 
   def self.rails4?
@@ -85,6 +86,7 @@ class ActiveRecord::Base
     include SimpleCache::AutoUpdate
     include SimpleCache::HasMany
     include SimpleCache::HasOne
+    include SimpleCache::BelongsTo
     include SimpleCache::Find
   end
 end
