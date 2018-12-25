@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, cache: false
 end
 
 class Weapon < ActiveRecord::Base

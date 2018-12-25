@@ -3,6 +3,36 @@ RSpec.describe SimpleCache::BelongsTo do
     let(:player) { Player.take }
     let(:item) { Item.take }
 
+    context "when option 'cache' is false" do
+      let(:account) { Account.take }
+      let(:cache_key) { "simple_cache:user.#{account.user_id}.has_many.Account" }
+
+      subject { account.user }
+
+      it { is_expected.to be_an(User) }
+
+      it "should not cache the association objects" do
+        expect(SimpleCache.store.read(cache_key)).to be_nil
+        subject
+        expect(SimpleCache.store.read(cache_key)).to be_nil
+      end
+    end
+
+    context "when option 'polymorphic' is specified" do
+      let(:cache_key) { "simple_cache:#{item.item_type}.#{item.item_id}.has_many.Item" }
+      let(:association_kls) { Item.take.item.class }
+
+      subject { item.item }
+
+      it { is_expected.to be_an(association_kls) }
+
+      it "should not cache the association objects" do
+        expect(SimpleCache.store.read(cache_key)).to be_nil
+        subject
+        expect(SimpleCache.store.read(cache_key)).to be_nil
+      end
+    end
+
     context "when option 'cache' is true" do
       let(:cache_key) { "simple_cache:user.#{player.user_id}.has_many.Player" }
 
