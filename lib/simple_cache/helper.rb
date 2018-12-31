@@ -74,8 +74,9 @@ module SimpleCache
       SimpleCache.store.write(key, SimpleCache::LOCK_VAL, expires_in: 2.minutes)
     end
 
-    def lock_associations(base)
-      do_associations_cache(base) do |kls, id, name|
+    def lock_associations_of(base_class)
+      do_associations_cache(base_class) do |kls, id, name|
+        # キーをGenerateしてから、ロックをかける
         SimpleCache.lock(kls, id, name)
       end
     end
@@ -96,7 +97,6 @@ module SimpleCache
       self.locked_cache_model.each do |e|
         SimpleCache.delete(e[:model].class, e[:model].id,  e[:name])
       end
-      self.reset_locked_cache_model
     end
 
     def key
@@ -106,46 +106,5 @@ module SimpleCache
     def key=(k)
       @cache_key = k
     end
-
-    def locked_cache_model
-      @locked_cache_model ||= []
-    end
-
-    def locked_cache_model=(arr)
-      @locked_cache_model = arr
-    end
-
-    def reset_locked_cache_model
-      @locked_cache_model = nil
-    end
-  end
-
-  def self.sanitize(options)
-    options.delete(:cache)
-    options || {}
-  end
-
-  def self.use?(options = {})
-    if auto_cache?
-      (options[:cache].nil? || options[:cache])
-    else
-      (options[:cache].present? && options[:cache])
-    end && (options.keys & not_allowed_options).size.zero?
-  end
-
-  def self.cachable?(kls, id, method_name)
-    store.read(key(kls, id, method_name)) != -1
-  end
-
-  def self.delete(kls, id, method_name)
-    store.delete(key(kls, id, method_name))
-  end
-
-  def self.lock(kls, id, method_name)
-    store.write(key(kls, id, method_name), -1, expires_in: 2.minutes)
-  end
-
-  def self.key(kls, id, method_name)
-    "simple_cache:#{kls.name.split('::').first.underscore}.#{id}.#{method_name}"
   end
 end

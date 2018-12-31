@@ -7,13 +7,26 @@ require "simple_cache/has_many"
 require "simple_cache/has_one"
 require "simple_cache/belongs_to"
 require "simple_cache/find"
+require "simple_cache/cache"
+require "simple_cache/key_generatable"
+require "simple_cache/reflection"
+require "simple_cache/reflection/association"
+require "simple_cache/reflection/inverse_association"
+require "logger"
 
 module SimpleCache
 
   LOCK_VAL = -1
 
+  mattr_accessor :cache_namespace
+  self.cache_namespace = "SC:#{CACHE_VERSION}".freeze
+
   def self.store
     @store ||= ActiveSupport::Cache::MemCacheStore.new
+  end
+
+  def self.cache
+    @cache ||= SimpleCache::Cache.new
   end
 
   def self.config
@@ -44,6 +57,10 @@ module SimpleCache
 
   def self.not_allowed_options
     [:as, :through, :primary_key, :source, :source_type, :inverse_of, :polymorphic]
+  end
+
+  def self.logger
+    @logger ||= defined?(::Rails.logger) ? Rails.logger : Logger.new(STDOUT)
   end
 
   def self.rails4?
@@ -77,10 +94,47 @@ module SimpleCache
   def self.atleast_rails52?
     ActiveRecord::VERSION::MAJOR > 5 || (ActiveRecord::VERSION::MAJOR == 5 && ActiveRecord::VERSION::MINOR > 1)
   end
+
+  def self.sanitize(scope, options)
+    org_options = {}
+    if options == {} && scope.is_a?(Hash)
+      org_options = scope.dup
+      scope.delete(:cache)
+    else
+      org_options = options.dup
+      options.delete(:cache)
+    end
+    org_options
+  end
+
+  def self.use?(options = {})
+    if auto_cache?
+      (options[:cache].nil? || options[:cache])
+    else
+      (options[:cache].present? && options[:cache])
+    end && (options.keys & not_allowed_options).size.zero?
+  end
+
+  def self.cachable?(kls, id, method_name)
+    store.read(key(kls, id, method_name)) != -1
+  end
+
+  def self.delete(kls, id, method_name)
+    store.delete(key(kls, id, method_name))
+  end
+
+  def self.lock(kls, id, method_name)
+    store.write(key(kls, id, method_name), -1, expires_in: 2.minutes)
+  end
+
+  def self.key(kls, id, method_name)
+    "simple_cache:#{kls.name.split('::').first.underscore}.#{id}.#{method_name}"
+  end
 end
 
 class ActiveRecord::Base
   include SimpleCache::Helpable
+  include SimpleCache::KeyGeneratable
 
   if SimpleCache.auto_cache?
     include SimpleCache::AutoUpdate

@@ -5,20 +5,13 @@ module SimpleCache
     module ClassMethods
       def has_one(name, scope = nil, **options)
 
-        org_options = {}
-
-        if options == {} && scope.is_a?(Hash)
-          org_options = scope.dup
-          SimpleCache.sanitize(scope)
-        else
-          org_options = options.dup
-          SimpleCache.sanitize(options)
-        end
+        org_options = SimpleCache.sanitize(scope, options)
 
         super
 
         return unless SimpleCache.use?(org_options)
-        add_inverse_reflections(name)
+
+        SimpleCache::Reflection::Association.add_reflection(self, name)
         define_cache_method_for_one_to_one(name, options)
       end
 

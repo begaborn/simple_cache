@@ -1,7 +1,7 @@
 RSpec.describe SimpleCache::Find do
   describe "When you include SimpleCache::Find" do
     let(:user) { User.take }
-    let(:cache_key) { SimpleCache.key(User, user.id, :find) }
+    let(:cache_key) { user.simple_cache_key }
 
     let(:org_name) { user.players.first.name }
     let(:changed_name) { 'changed name' }

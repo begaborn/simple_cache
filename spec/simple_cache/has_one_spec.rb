@@ -3,7 +3,7 @@ RSpec.describe SimpleCache::HasOne do
     let(:user) { User.take }
 
     context "when option 'cache' is false" do
-      let(:cache_key) { SimpleCache.key(User, user.id, :account) }
+      let(:cache_key) { user.simple_cache_association_key(:account) }
 
       subject { user.account }
 
@@ -18,7 +18,7 @@ RSpec.describe SimpleCache::HasOne do
 
     context "when specifying option 'class_name' + 'foreing_key'" do
       let(:last_credit_card) { user.credit_cards.last }
-      let(:cache_key) { SimpleCache.key(CreditCard, last_credit_card.id, :previous) }
+      let(:cache_key) { last_credit_card.simple_cache_association_key(:previous) }
 
       subject { last_credit_card.previous }
 
@@ -71,7 +71,6 @@ RSpec.describe SimpleCache::HasOne do
         user.account_with_cache
       end
 
-      "Number of SQL Queries = #{query_count}"
       expect(query_count).to eq(3)
     end
   end

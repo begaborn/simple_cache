@@ -2,42 +2,37 @@ module SimpleCache
   module AutoUpdate
     extend ActiveSupport::Concern
 
-    def included(klass)
-      klass.extend ClassMethods
-    end
-
     included do
       before_save do |_record|
-        simple_cache = simple_cache(:find)
-        simple_cache.lock_associations(self)
-        simple_cache.lock
-        SimpleCache::Helper.reflections_for_belongs_to(self.class.name).each do |model_name|
-          simple_cache.key = SimpleCache.key(self.class, self.id, "has_many.#{model_name}")
-          simple_cache.lock
-        end
+        self.locked_simple_cache_key = SimpleCache.cache.lock_associations_of(self)
+        SimpleCache.cache.lock simple_cache_key
       end
 
       before_destroy do |_record|
-        simple_cache = simple_cache(:find)
-        simple_cache.lock_associations(self)
-        simple_cache.lock
+        self.locked_simple_cache_key = SimpleCache.cache.lock_associations_of(self)
+        SimpleCache.cache.lock simple_cache_key
       end
 
       after_commit do |_record|
-        simple_cache = simple_cache(:find)
-        simple_cache.delete_associations
-        simple_cache.delete
+        SimpleCache.cache.delete simple_cache_key
+        SimpleCache.cache.delete_all locked_simple_cache_key
+        self.reset_locked_simple_cache_key
       end
     end
 
-    module ClassMethods
-      def inverse_reflections
-        @inverse_reflections ||= {}
-      end
-
-      def inverse_reflections_for_belongs_to
-        @inverse_reflections_for_belongs_to ||= []
-      end
+    def locked_simple_cache_key
+      @locked_simple_cache_key ||= []
     end
+
+    def locked_simple_cache_key=(arr)
+      @locked_simple_cache_key = arr
+    end
+
+    def reset_locked_simple_cache_key
+      @locked_simple_cache_key = []
+    end
+
+
+
   end
 end

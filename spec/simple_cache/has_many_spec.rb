@@ -3,7 +3,7 @@ RSpec.describe SimpleCache::HasMany do
     let(:user) { User.take }
 
     context "when option 'cache' is false" do
-      let(:cache_key) { SimpleCache.key(User, user.id, :credit_cards) }
+      let(:cache_key) { user.simple_cache_association_key(:credit_cards) }
 
       subject { user.credit_cards }
 
@@ -21,7 +21,10 @@ RSpec.describe SimpleCache::HasMany do
     end
 
     context "when using cache" do
-      let(:cache_key) { SimpleCache.key(User, user.id, :players) }
+      let(:cache_key) { user.simple_cache_association_key(:players) }
+      let(:org_name) { user.players.first.name }
+      let(:changed_name) { 'changed name' }
+      let(:org_size) { user.players.size }
 
       subject { user.players }
 
@@ -38,10 +41,6 @@ RSpec.describe SimpleCache::HasMany do
       end
 
       context "after committing a transaction" do
-        let(:org_name) { user.players.first.name }
-        let(:changed_name) { 'changed name' }
-        let(:org_size) { user.players.size }
-
         subject do
           objects_with_cache = user.players
           objects_with_cache.first.name = changed_name
@@ -60,32 +59,35 @@ RSpec.describe SimpleCache::HasMany do
         end
 
         its(:name) { is_expected.to eq(changed_name) }
+      end
 
-        context "when reloading the objects again" do
-          subject do
-            objects_with_cache = user.players
-            objects_with_cache.first.name = changed_name
-            objects_with_cache.first.save!
-            User.take.players
-          end
+      context "when reloading the objects again" do
+        subject do
+          objects_with_cache = user.players
+          objects_with_cache.first.name = changed_name
+          objects_with_cache.first.save!
+          User.take.players
+        end
 
-          its(:size) { is_expected.to eq(org_size) }
+        its(:size) { is_expected.to eq(org_size) }
 
-          it "should change the name" do
-            expect(subject.first.name).to eq(changed_name)
-          end
+        it "should change the name" do
+          expect(subject.first.name).to eq(changed_name)
+        end
 
-          it "should cache the association objects" do
-            expect(SimpleCache.store.read(cache_key)).to be_nil
-            cached_objects = subject
-            expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
-          end
+        it "should cache the association objects" do
+          expect(SimpleCache.store.read(cache_key)).to be_nil
+          cached_objects = subject
+          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
         end
       end
     end
 
     context "when specifying the options 'class_name' + 'foreign_key' and scope " do
-      let(:cache_key) { SimpleCache.key(User, user.id, :p2) }
+      let(:cache_key) { user.simple_cache_association_key(:p2) }
+      let(:org_name) { user.p2.first.name }
+      let(:changed_name) { 'changed name' }
+      let(:org_size) { user.p2.size }
 
       subject { user.p2.first }
 
@@ -100,10 +102,6 @@ RSpec.describe SimpleCache::HasMany do
       end
 
       context "after committing a transaction" do
-        let(:org_name) { user.p2.first.name }
-        let(:changed_name) { 'changed name' }
-        let(:org_size) { user.p2.size }
-
         subject do
           user.p2.first.name = changed_name
           user.p2.first.save!
@@ -121,31 +119,31 @@ RSpec.describe SimpleCache::HasMany do
         end
 
         its(:name) { is_expected.to eq(changed_name) }
+      end
 
-        context "when reloading the objects again" do
-          subject do
-            user.p2.first.name = changed_name
-            user.p2.first.save!
-            User.take.p2
-          end
+      context "when reloading the objects again" do
+        subject do
+          user.p2.first.name = changed_name
+          user.p2.first.save!
+          User.take.p2
+        end
 
-          its(:size) { is_expected.to eq(org_size) }
+        its(:size) { is_expected.to eq(org_size) }
 
-          it "should change the name" do
-            expect(subject.first.name).to eq(changed_name)
-          end
+        it "should change the name" do
+          expect(subject.first.name).to eq(changed_name)
+        end
 
-          it "should cache the association objects" do
-            expect(SimpleCache.store.read(cache_key)).to be_nil
-            cached_objects = subject
-            expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
-          end
+        it "should cache the association objects" do
+          expect(SimpleCache.store.read(cache_key)).to be_nil
+          cached_objects = subject
+          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
         end
       end
     end
 
     context "when refreshing the objects after committing by creating" do
-      let(:cache_key) { SimpleCache.key(User, user.id, :p2) }
+      let(:cache_key) { user.simple_cache_association_key(:p2) }
 
       subject do
         User.take.p2
@@ -166,7 +164,7 @@ RSpec.describe SimpleCache::HasMany do
     end
 
     context "when refreshing the objects after committing by deleting" do
-      let(:cache_key) { SimpleCache.key(User, user.id, :p2) }
+      let(:cache_key) { user.simple_cache_association_key(:p2) }
 
       subject do
         ActiveRecord::Base.transaction do
@@ -190,7 +188,10 @@ RSpec.describe SimpleCache::HasMany do
     end
 
     context "when specifying a block" do
-      let(:cache_key) { SimpleCache.key(User, user.id, :p1) }
+      let(:cache_key) { user.simple_cache_association_key(:p1) }
+      let(:org_name) { user.p1.hero.name }
+      let(:changed_name) { 'changed name' }
+      let(:org_size) { user.p1.size }
 
       subject { user.p1.hero }
 
@@ -205,10 +206,6 @@ RSpec.describe SimpleCache::HasMany do
       end
 
       context "after committing a transaction" do
-        let(:org_name) { user.p1.hero.name }
-        let(:changed_name) { 'changed name' }
-        let(:org_size) { user.p1.size }
-
         subject do
           user.p1.hero.name = changed_name
           user.p1.hero.save!
@@ -226,35 +223,35 @@ RSpec.describe SimpleCache::HasMany do
         end
 
         its(:name) { is_expected.to eq(changed_name) }
+      end
 
-        context "when reloading the objects again" do
-          subject do
-            user.p1.hero.name = changed_name
-            user.p1.hero.save!
-            User.take.p1
-          end
+      context "when reloading the objects again" do
+        subject do
+          user.p1.hero.name = changed_name
+          user.p1.hero.save!
+          User.take.p1
+        end
 
-          its(:size) { is_expected.to eq(org_size) }
+        its(:size) { is_expected.to eq(org_size) }
 
-          it "should change the name" do
-            expect(subject.hero.name).to eq(changed_name)
-          end
+        it "should change the name" do
+          expect(subject.hero.name).to eq(changed_name)
+        end
 
-          it "should cache the association objects" do
-            expect(SimpleCache.store.read(cache_key)).to be_nil
-            cached_objects = subject
-            expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
-          end
+        it "should cache the association objects" do
+          expect(SimpleCache.store.read(cache_key)).to be_nil
+          cached_objects = subject
+          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
         end
       end
     end
 
     context "while locking" do
       let(:user) { User.take }
-      let(:cache_key) { SimpleCache.key(User, user.id, :players) }
+      let(:cache_key) { user.simple_cache_association_key(:players) }
 
       before do
-        user.simple_cache(:players).lock
+        SimpleCache.cache.lock(cache_key)
       end
 
       subject { user.players }
@@ -273,14 +270,14 @@ RSpec.describe SimpleCache::HasMany do
 
     context "commit a transaction while locking" do
       let(:user) { User.take }
-      let(:cache_key) { SimpleCache.key(User, user.id, :players) }
+      let(:cache_key) { user.simple_cache_association_key(:players) }
 
       before do
-        user.simple_cache(:players).lock
+        SimpleCache.cache.lock(cache_key)
       end
 
       subject do
-        user.players.first.name = "kkk"
+        user.players.first.name = "test name"
         user.players.first.save!
         User.take.players
       end
@@ -313,7 +310,6 @@ RSpec.describe SimpleCache::HasMany do
           items = player.items # SQL Query wll not be executed because of caching the objects
         end
 
-        "Number of SQL Queries = #{query_count}"
         expect(query_count).to eq(3)
       end
     end

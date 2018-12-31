@@ -5,7 +5,7 @@ RSpec.describe SimpleCache::BelongsTo do
 
     context "when option 'cache' is false" do
       let(:account) { Account.take }
-      let(:cache_key) { "simple_cache:user.#{account.user_id}.has_many.Account" }
+      let(:cache_key) { account.simple_cache_inverse_association_key(:user) }
 
       subject { account.user }
 
@@ -19,7 +19,7 @@ RSpec.describe SimpleCache::BelongsTo do
     end
 
     context "when option 'polymorphic' is specified" do
-      let(:cache_key) { "simple_cache:#{item.item_type}.#{item.item_id}.has_many.Item" }
+      let(:cache_key) { item.simple_cache_inverse_association_key(:item) }
       let(:association_kls) { Item.take.item.class }
 
       subject { item.item }
@@ -34,7 +34,7 @@ RSpec.describe SimpleCache::BelongsTo do
     end
 
     context "when option 'cache' is true" do
-      let(:cache_key) { "simple_cache:user.#{player.user_id}.has_many.Player" }
+      let(:cache_key) { player.simple_cache_inverse_association_key(:user) }
 
       subject { player.user }
 
@@ -89,7 +89,7 @@ RSpec.describe SimpleCache::BelongsTo do
 
     context "when specifying the options 'class_name' + 'foreign_key' and scope " do
 
-      let(:cache_key) { "simple_cache:player.#{item.hero.id}.has_many.Item" }
+      let(:cache_key) { item.simple_cache_inverse_association_key(:hero) }
 
       subject { item.hero }
 

@@ -4,44 +4,22 @@ module SimpleCache
   module Helpable
     extend ActiveSupport::Concern
 
-    class << self
-      def included(klass)
-        klass.extend ClassMethods
-      end
-    end
-
-    def simple_cache(method_name)
-      @simple_cache ||= {}
-      @simple_cache[method_name] ||= SimpleCache::Helper.new self.class, self.id, method_name
-    end
-
     def cache_association_model(method_name, &block)
-      method_name = method_name.to_sym
-      simple_cache = simple_cache(method_name)
       @association_simple_cache ||= {}
-      @association_simple_cache[method_name] ||= simple_cache.fetch(&block)
+      @association_simple_cache[method_name] ||= begin
+        cache_key = simple_cache_association_key(method_name.to_sym)
+        begin
+          SimpleCache.cache.fetch(cache_key, &block)
+        rescue => ex
+          # Address an issue that cause TypeError when caching the association model in RABL.
+          return self.class.find(id).send(method_name)
+        end
+      end
     end
 
     def reload(*)
       remove_instance_variable(:@association_simple_cache) if @association_simple_cache
       super
-    end
-
-    module ClassMethods
-      def add_inverse_reflections(name)
-        r = reflections[name.to_s]
-
-        unless r.klass.respond_to?(:inverse_reflections)
-          logger.warn 'The objects in the cache would not be updated unless SimpleCache::AutoUpdate is included' if logger
-          return
-        end
-        inverse_reflections = r.klass.inverse_reflections
-        inverse_reflections[self.name] ||= []
-        inverse_reflections[self.name] += [{
-          name: name,
-          foreign_key: r.foreign_key.to_sym
-        }]
-      end
     end
   end
 end

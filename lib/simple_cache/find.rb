@@ -2,27 +2,21 @@ module SimpleCache
   module Find
     extend ActiveSupport::Concern
 
-    attr_accessor :cache_self
-
     module ClassMethods
       def find(*args)
-        return super if @use_find_cache == false
+        return super unless @find_method_use_cache
 
         method_name = __method__
         ids = args.flatten.compact.uniq
         return super if ids.size != 1 || block_given? || args.first.kind_of?(Array)
 
-        id = ids.first
-        simple_cache = SimpleCache::Helper.new self, id, method_name
-        return super unless simple_cache.cachable?
-
-        SimpleCache.store.fetch(simple_cache.key, expires_in: SimpleCache.expires_in) do
+        SimpleCache.cache.fetch(simple_cache_key(ids.first)) do
           super
         end
       end
 
-      def use_find_cache(use = true)
-        @use_find_cache = use
+      def find_method_use_cache(use)
+        @find_method_use_cache = use
       end
     end
   end
