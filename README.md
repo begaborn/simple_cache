@@ -1,17 +1,17 @@
 # What's Simple Cache?
-Simple Cache is a library which caches the model objects and their associations. 
-It's simple! Nothing needs to be done to cache and refresh the model objects! 
+Simple Cache is a library which caches the model objects and their associations.
+It's simple! Nothing needs to be done to cache and refresh the model objects!
 
 Let's say there are the following two models with a one-to-many relationship.
 ```ruby:user.rb
 class User < ApplicationRecord
-  has_many :players
+  has_many :players, cache: true
 end
-``` 
+```
 ```ruby:player.rb
 class Player < ApplicationRecord
 end
-``` 
+```
 
 At first, the `players` objects, which are the `user` object's associations, will be retrieved from the database when executing the following sample snippet. At the same time, the `players` objects will be stored in the Memcached automatically.
 When executing the following code again, `players` objects will be retrieved from the Memcached, not the database.
@@ -24,27 +24,51 @@ User.take.players
 Simple Cache removes the objects from the Memcached when committing a transaction in your program, to keep them up-to-date.
 Then they are retrieved from the database and stored onto the Memcached again.
 
-# Usage 
-Only just add this Gem! 
-
 ## Install
 Add this line to Gemfile:
 ```
 gem 'ar-simple-cache', github: 'begaborn/simple_cache'
 ```
-Currently, SimpleCache supports Rails 4.2 or later. 
+Currently, SimpleCache supports Rails 4.2 or later.
 
 ```
 bundle install
 ```
 
-# Notes
-1. If any option below is specified for `has_many` or `has_one`, the model objects will not be cached. 
-```
-:as, :through, :primary_key, :source, :source_type, :inverse_of
+# Usage
+## Cache the object for `find`
+```ruby:user.rb
+class User < ApplicationRecord
+  find_method_use_cache
+end
 ```
 
-2. Only the objects, which are `has_many` or `has_one` associations, are cached currently.
+## Cache the association object for `has_one`
+```
+class User < ActiveRecord::Base
+  has_one :account, cache: true
+end
+```
+
+## Cache the association object for `has_many`
+```
+class User < ActiveRecord::Base
+  has_many :players, cache: true
+end
+```
+
+## Cache the association object for `belongs_to`
+```
+class Player < ActiveRecord::Base
+  belongs_to :user, cache: true
+end
+```
+
+# Notes
+1. If any option below is specified for `has_many`, `has_one`, `belongs_to` the model objects will not be cached.
+```
+:as, :through, :primary_key, :source, :source_type, :inverse_of, :polymorphic
+```
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/begaborn/simple_cache. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
