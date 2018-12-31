@@ -31,8 +31,5 @@ module SimpleCache
     def reset_locked_simple_cache_key
       @locked_simple_cache_key = []
     end
-
-
-
   end
 end

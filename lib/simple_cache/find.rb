@@ -15,7 +15,7 @@ module SimpleCache
         end
       end
 
-      def find_method_use_cache(use)
+      def find_method_use_cache(use = true)
         @find_method_use_cache = use
       end
     end

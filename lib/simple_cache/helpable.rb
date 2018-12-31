@@ -1,5 +1,3 @@
-require 'simple_cache/helper'
-
 module SimpleCache
   module Helpable
     extend ActiveSupport::Concern

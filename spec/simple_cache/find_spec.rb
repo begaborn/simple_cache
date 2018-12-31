@@ -6,7 +6,23 @@ RSpec.describe SimpleCache::Find do
     let(:org_name) { user.players.first.name }
     let(:changed_name) { 'changed name' }
 
+    context "when parameter is array" do
+
+      before { allow(SimpleCache.store).to receive(:write).and_call_original }
+
+      subject { User.find(User.all.pluck(:id)) }
+
+      it { is_expected.to be_an(Array) }
+
+      it "should not cache the object" do
+        subject
+        expect(SimpleCache.store).to_not have_received(:write)
+      end
+    end
+
     context "when parameter is not array and one" do
+
+      before { allow(SimpleCache.store).to receive(:write).and_call_original }
 
       subject { User.find(user.id) }
 
@@ -17,6 +33,7 @@ RSpec.describe SimpleCache::Find do
       it "should cache the object" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
+        expect(SimpleCache.store).to have_received(:write)
         expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
       end
     end
@@ -25,6 +42,7 @@ RSpec.describe SimpleCache::Find do
 
       before do
         User.find(user.id)
+        allow(SimpleCache.store).to receive(:delete).and_call_original
       end
 
       subject do
@@ -40,11 +58,14 @@ RSpec.describe SimpleCache::Find do
       it "should remove the object from the cache store" do
         expect(SimpleCache.store.read(cache_key)).to eq(user)
         subject
+        expect(SimpleCache.store).to have_received(:delete)
         expect(SimpleCache.store.read(cache_key)).to be_nil
       end
     end
 
     context "when reloading the objects again" do
+      before { allow(SimpleCache.store).to receive(:write).and_call_original }
+
       subject do
         user.name = changed_name
         user.save!
@@ -58,6 +79,7 @@ RSpec.describe SimpleCache::Find do
       it "should remove the object from the cache store" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
+        expect(SimpleCache.store).to have_received(:write).twice
         expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
       end
     end

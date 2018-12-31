@@ -1,4 +1,9 @@
 module SimpleCache
+
+  LOCK_VAL = -1
+  mattr_accessor :cache_namespace
+  self.cache_namespace = "SC:#{CACHE_VERSION}".freeze
+
   class Cache
     def read(key)
       SimpleCache.logger.debug "[SimpleCache] read #{key}"
@@ -14,12 +19,11 @@ module SimpleCache
       cached_obj = read(key)
       if cached_obj.nil?
         SimpleCache.logger.debug "[SimpleCache] miss #{key}"
-
-        # Address an issue that cause TypeError when caching the association model in RABL.
         obj = block.call
         write(key, obj)
         obj
       elsif cached_obj == SimpleCache::LOCK_VAL
+        SimpleCache.logger.debug "[SimpleCache] locking #{key}"
         block.call
       else
         cached_obj
@@ -49,7 +53,6 @@ module SimpleCache
     def lock_inverse_associations_of(base)
       r = SimpleCache::Reflection::InverseAssociation.reflections[base.class.name.to_sym] || []
       r.each_with_object([]) do |model_name, keys|
-        binding.pry if model_name == 'CreditCard'
         key = base.simple_cache_inverse_association_key(model_name)
         keys << key
         lock(key)

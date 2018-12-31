@@ -13,7 +13,7 @@ module SimpleCache
     end
 
     def simple_cache_association_key(method_name)
-      "#{SimpleCache.cache_namespace}:#{self.class.name}:#{id}:ass:#{method_name}"
+      "#{SimpleCache.cache_namespace}:#{self.class.name}:#{id}:has:#{method_name}"
     end
 
     def simple_cache_inverse_association_key(method_name)

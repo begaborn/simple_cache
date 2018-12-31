@@ -6,7 +6,7 @@ require "rspec/its"
 
 SimpleCache.instance_variable_set(:@directory, File.dirname(__FILE__))
 
-BaseSimpleCacheMigration = (SimpleCache.rails4? ? ActiveRecord::Migration : ActiveRecord::Migration[ActiveRecord::VERSION::STRING[0..2]])
+BaseSimpleCacheMigration = (SimpleCache.rails_version.v4? ? ActiveRecord::Migration : ActiveRecord::Migration[ActiveRecord::VERSION::STRING[0..2]])
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
@@ -28,7 +28,7 @@ RSpec.configure do |config|
   config.before(:all) do
     migration_dir = "#{File.dirname(__FILE__)}/migrations"
 
-    if SimpleCache.rails4?
+    if SimpleCache.rails_version.v4?
       ActiveRecord::Migrator.migrate(migration_dir)
     else
       ActiveRecord::MigrationContext.new(migration_dir).up
@@ -72,7 +72,7 @@ RSpec.configure do |config|
 
   config.after(:all) do
     migration_dir = "#{File.dirname(__FILE__)}/migrations"
-    if SimpleCache.rails4?
+    if SimpleCache.rails_version.v4?
       ActiveRecord::Migrator.down(migration_dir)
     else
       ActiveRecord::MigrationContext.new(migration_dir).down
