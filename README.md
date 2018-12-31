@@ -44,21 +44,21 @@ end
 ```
 
 ## Cache the association object for `has_one`
-```
+```ruby:user.rb
 class User < ActiveRecord::Base
   has_one :account, cache: true
 end
 ```
 
-## Cache the association object for `has_many`
-```
+## Cache the association objects for `has_many`
+```ruby:user.rb
 class User < ActiveRecord::Base
   has_many :players, cache: true
 end
 ```
 
 ## Cache the association object for `belongs_to`
-```
+```ruby:user.rb
 class Player < ActiveRecord::Base
   belongs_to :user, cache: true
 end
