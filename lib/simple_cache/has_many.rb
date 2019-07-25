@@ -7,7 +7,7 @@ module SimpleCache
 
         org_options = SimpleCache.sanitize(scope, options)
 
-        super
+        has_many(name, scope, options, extension)
 
         return unless SimpleCache.use?(org_options)
 
