@@ -3,7 +3,7 @@ module SimpleCache
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def belongs_to(name, scope = nil, **options)
+      def belongs_to_cached(name, scope = nil, **options)
 
         org_options = SimpleCache.sanitize(scope, options)
 
