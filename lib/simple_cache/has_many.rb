@@ -5,7 +5,7 @@ module SimpleCache
     module ClassMethods
       def has_many_cached(name, scope = nil, **options, &extension)
 
-        has_many(name, scope, options, extension)
+        has_many(name, scope, options, &extension)
 
         SimpleCache::Reflection::Association.add_reflection(self, name)
         define_cache_method_for_one_to_many(name, options)
