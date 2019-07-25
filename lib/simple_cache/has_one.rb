@@ -5,11 +5,7 @@ module SimpleCache
     module ClassMethods
       def has_one_cached(name, scope = nil, **options)
 
-        org_options = SimpleCache.sanitize(scope, options)
-
         has_one(name, scope, options)
-
-        return unless SimpleCache.use?(org_options)
 
         SimpleCache::Reflection::Association.add_reflection(self, name)
         define_cache_method_for_one_to_one(name, options)

@@ -5,11 +5,7 @@ module SimpleCache
     module ClassMethods
       def belongs_to_cached(name, scope = nil, **options)
 
-        org_options = SimpleCache.sanitize(scope, options)
-
         belongs_to(name, scope, options)
-
-        return unless SimpleCache.use?(org_options)
 
         define_cache_belongs_to(name, options)
       end
