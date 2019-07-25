@@ -20,13 +20,13 @@ module SimpleCache
       if cached_obj.nil?
         SimpleCache.logger.debug "[SimpleCache] miss #{key}"
         obj = block.call
-        write(key, obj)
+        write(key, Marshal.dump(obj))
         obj
       elsif cached_obj == SimpleCache::LOCK_VAL
         SimpleCache.logger.debug "[SimpleCache] locking #{key}"
         block.call
       else
-        cached_obj
+        Marshal.load(cached_obj)
       end
     end
 
