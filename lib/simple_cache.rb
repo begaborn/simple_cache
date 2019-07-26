@@ -36,7 +36,7 @@ module SimpleCache
   end
 
   def self.not_allowed_options
-    [:as, :through, :primary_key, :source, :source_type, :inverse_of, :polymorphic]
+    [:as, :through, :primary_key, :source, :source_type, :polymorphic]
   end
 
   def self.sanitize(scope, options)
