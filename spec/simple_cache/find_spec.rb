@@ -6,25 +6,11 @@ RSpec.describe SimpleCache::Find do
     let(:org_name) { user.players.first.name }
     let(:changed_name) { 'changed name' }
 
-    context "when parameter is array" do
-
-      before { allow(SimpleCache.store).to receive(:write).and_call_original }
-
-      subject { User.find(User.all.pluck(:id)) }
-
-      it { is_expected.to be_an(Array) }
-
-      it "should not cache the object" do
-        subject
-        expect(SimpleCache.store).to_not have_received(:write)
-      end
-    end
-
     context "when parameter is not array and one" do
 
       before { allow(SimpleCache.store).to receive(:write).and_call_original }
 
-      subject { User.find(user.id) }
+      subject { User.find_cache(user.id) }
 
       it { is_expected.to be_an(User) }
 
@@ -34,14 +20,14 @@ RSpec.describe SimpleCache::Find do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
         expect(SimpleCache.store).to have_received(:write)
-        expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_object)
       end
     end
 
     context "after committing a transaction" do
 
       before do
-        User.find(user.id)
+        User.find_cache(user.id)
         allow(SimpleCache.store).to receive(:delete).and_call_original
       end
 
@@ -56,9 +42,8 @@ RSpec.describe SimpleCache::Find do
       end
 
       it "should remove the object from the cache store" do
-        expect(SimpleCache.store.read(cache_key)).to eq(user)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(user)
         subject
-        expect(SimpleCache.store).to have_received(:delete)
         expect(SimpleCache.store.read(cache_key)).to be_nil
       end
     end
@@ -69,7 +54,7 @@ RSpec.describe SimpleCache::Find do
       subject do
         user.name = changed_name
         user.save!
-        User.find(user.id)
+        User.find_cache(user.id)
       end
 
       it { is_expected.to eq(user) }
@@ -79,8 +64,7 @@ RSpec.describe SimpleCache::Find do
       it "should remove the object from the cache store" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
-        expect(SimpleCache.store).to have_received(:write).twice
-        expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_object)
       end
     end
   end

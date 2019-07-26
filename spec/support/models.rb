@@ -35,7 +35,6 @@ class Player < ActiveRecord::Base
 end
 
 class User < ActiveRecord::Base
-  find_method_use_cache
   has_many_cached :players
   has_many_cached :p1, class_name: :Player do
     def hero

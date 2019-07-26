@@ -22,6 +22,7 @@ module SimpleCache
 
     def reload(*)
       remove_instance_variable(:@association_simple_cache) if @association_simple_cache
+      remove_instance_variable(:@simple_cache_belongs_to) if @simple_cache_belongs_to
       super
     end
   end
