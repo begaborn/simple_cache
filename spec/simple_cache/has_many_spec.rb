@@ -26,7 +26,8 @@ RSpec.describe SimpleCache::HasMany do
       let(:changed_name) { 'changed name' }
       let(:org_size) { user.players.size }
 
-      subject { user.players }
+      subject { user.cached_players }
+
 
       it { is_expected.to be_an(ActiveRecord::Associations::CollectionProxy) }
 
@@ -37,12 +38,12 @@ RSpec.describe SimpleCache::HasMany do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(user.players)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(user.players)
       end
 
       context "after committing a transaction" do
         subject do
-          objects_with_cache = user.players
+          objects_with_cache = user.cached_players
           objects_with_cache.first.name = changed_name
           objects_with_cache.first.save!
           user.players.first
@@ -63,10 +64,10 @@ RSpec.describe SimpleCache::HasMany do
 
       context "when reloading the objects again" do
         subject do
-          objects_with_cache = user.players
+          objects_with_cache = user.cached_players
           objects_with_cache.first.name = changed_name
           objects_with_cache.first.save!
-          User.take.players
+          User.take.cached_players
         end
 
         its(:size) { is_expected.to eq(org_size) }
@@ -78,7 +79,7 @@ RSpec.describe SimpleCache::HasMany do
         it "should cache the association objects" do
           expect(SimpleCache.store.read(cache_key)).to be_nil
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+          expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_objects)
         end
       end
     end
@@ -89,7 +90,7 @@ RSpec.describe SimpleCache::HasMany do
       let(:changed_name) { 'changed name' }
       let(:org_size) { user.p2.size }
 
-      subject { user.p2.first }
+      subject { user.cached_p2.first }
 
       it { is_expected.to be_an(Player) }
 
@@ -98,19 +99,19 @@ RSpec.describe SimpleCache::HasMany do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(user.p2)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(user.p2)
       end
 
       context "after committing a transaction" do
         subject do
-          user.p2.first.name = changed_name
-          user.p2.first.save!
-          user.p2.first
+          user.cached_p2.first.name = changed_name
+          user.cached_p2.first.save!
+          user.cached_p2.first
         end
 
         after do
-          user.p2.first.name = org_name
-          user.p2.first.save!
+          user.cached_p2.first.name = org_name
+          user.cached_p2.first.save!
         end
 
         it "should remove the association objects from the cache store" do
@@ -123,9 +124,9 @@ RSpec.describe SimpleCache::HasMany do
 
       context "when reloading the objects again" do
         subject do
-          user.p2.first.name = changed_name
-          user.p2.first.save!
-          User.take.p2
+          user.cached_p2.first.name = changed_name
+          user.cached_p2.first.save!
+          User.take.cached_p2
         end
 
         its(:size) { is_expected.to eq(org_size) }
@@ -137,7 +138,7 @@ RSpec.describe SimpleCache::HasMany do
         it "should cache the association objects" do
           expect(SimpleCache.store.read(cache_key)).to be_nil
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+          expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_objects)
         end
       end
     end
@@ -146,9 +147,9 @@ RSpec.describe SimpleCache::HasMany do
       let(:cache_key) { user.simple_cache_association_key(:p2) }
 
       subject do
-        User.take.p2
+        User.take.cached_p2
         Player.create(name: 'test', user: User.take, is_hero: false)
-        User.take.p2
+        User.take.cached_p2
       end
 
       after do
@@ -159,7 +160,7 @@ RSpec.describe SimpleCache::HasMany do
 
       it "should cache the association objects" do
         cached_objects = subject
-        expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_objects)
       end
     end
 
@@ -168,11 +169,11 @@ RSpec.describe SimpleCache::HasMany do
 
       subject do
         ActiveRecord::Base.transaction do
-          User.take.p2
+          User.take.cached_p2
           p = Player.last
           p.destroy
         end
-        User.take.p2
+        User.take.cached_p2
       end
 
       after do
@@ -183,7 +184,7 @@ RSpec.describe SimpleCache::HasMany do
 
       it "should cache the association objects" do
         cached_objects = subject
-        expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_objects)
       end
     end
 
@@ -193,7 +194,7 @@ RSpec.describe SimpleCache::HasMany do
       let(:changed_name) { 'changed name' }
       let(:org_size) { user.p1.size }
 
-      subject { user.p1.hero }
+      subject { user.cached_p1.hero }
 
       it { is_expected.to be_an(Player) }
 
@@ -202,7 +203,7 @@ RSpec.describe SimpleCache::HasMany do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(user.p1)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(user.p1)
       end
 
       context "after committing a transaction" do
@@ -229,7 +230,7 @@ RSpec.describe SimpleCache::HasMany do
         subject do
           user.p1.hero.name = changed_name
           user.p1.hero.save!
-          User.take.p1
+          User.take.cached_p1
         end
 
         its(:size) { is_expected.to eq(org_size) }
@@ -241,7 +242,7 @@ RSpec.describe SimpleCache::HasMany do
         it "should cache the association objects" do
           expect(SimpleCache.store.read(cache_key)).to be_nil
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+          expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_objects)
         end
       end
     end
@@ -277,9 +278,9 @@ RSpec.describe SimpleCache::HasMany do
       end
 
       subject do
-        user.players.first.name = "test name"
-        user.players.first.save!
-        User.take.players
+        user.cached_players.first.name = "test name"
+        user.cached_players.first.save!
+        User.take.cached_players
       end
 
       it { is_expected.to be_an(ActiveRecord::Associations::CollectionProxy) }
@@ -290,7 +291,7 @@ RSpec.describe SimpleCache::HasMany do
 
       it "should not cache the association objects" do
         cached_obj = subject
-        expect(SimpleCache.store.read(cache_key)).to eq(cached_obj)
+        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_obj)
       end
     end
 
@@ -305,9 +306,9 @@ RSpec.describe SimpleCache::HasMany do
 
         ActiveSupport::Notifications.subscribed(count_up, 'sql.active_record') do
           player = Player.take
-          items = player.items
+          items = player.cached_items
           player = Player.take
-          items = player.items # SQL Query wll not be executed because of caching the objects
+          items = player.cached_items # SQL Query wll not be executed because of caching the objects
         end
 
         expect(query_count).to eq(3)

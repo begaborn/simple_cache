@@ -18,7 +18,7 @@ module SimpleCache
   end
 
   def self.expires_in
-    @expires_in ||= (class_eval(SimpleCache.config['expires_in'] || '') || 1.hours)
+    @expires_in ||= (class_eval(SimpleCache.config['expires_in'] || '') || nil)
   end
 
 end

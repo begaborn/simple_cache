@@ -7,16 +7,18 @@ module SimpleCache
 
         has_one(name, scope, options)
 
+        return unless SimpleCache.use? options
+
         SimpleCache::Reflection::Association.add_reflection(self, name)
-        define_cache_method_for_one_to_one(name, options)
+        define_cache_method_for_one_to_one(name)
       end
 
       private
 
-      def define_cache_method_for_one_to_one(method_name, **options)
-        define_method(method_name) do
+      def define_cache_method_for_one_to_one(method_name)
+        define_method("cached_#{method_name}") do
           self.cache_association_model(method_name) do
-            super()
+            send(method_name)
           end
         end
       end

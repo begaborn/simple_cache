@@ -20,7 +20,7 @@ RSpec.describe SimpleCache::HasOne do
       let(:last_credit_card) { user.credit_cards.last }
       let(:cache_key) { last_credit_card.simple_cache_association_key(:previous) }
 
-      subject { last_credit_card.previous }
+      subject { last_credit_card.cached_previous }
 
       it { is_expected.to eq(user.credit_cards.first) }
 
@@ -29,7 +29,7 @@ RSpec.describe SimpleCache::HasOne do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
-        expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
+        expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(cached_object))
       end
 
       context "after committing a transaction" do
@@ -66,9 +66,9 @@ RSpec.describe SimpleCache::HasOne do
 
       ActiveSupport::Notifications.subscribed(count_up, 'sql.active_record') do
         user = User.take
-        user.account_with_cache
+        user.cached_account_with_cache
         user = User.take
-        user.account_with_cache
+        user.cached_account_with_cache
       end
 
       expect(query_count).to eq(3)

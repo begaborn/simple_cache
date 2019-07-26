@@ -15,6 +15,11 @@ module SimpleCache
       end
     end
 
+    def cache_association_ids(method_name, &block)
+      cache_key = "#{simple_cache_association_key(method_name.to_sym)}:ids"
+      SimpleCache.cache.fetch(cache_key, &block)
+    end
+
     def reload(*)
       remove_instance_variable(:@association_simple_cache) if @association_simple_cache
       super

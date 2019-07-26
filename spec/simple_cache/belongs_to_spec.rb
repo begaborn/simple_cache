@@ -36,7 +36,7 @@ RSpec.describe SimpleCache::BelongsTo do
     context "when option 'cache' is true" do
       let(:cache_key) { player.simple_cache_inverse_association_key(:user) }
 
-      subject { player.user }
+      subject { player.cached_user }
 
       it { is_expected.to be_an(User) }
 
@@ -45,7 +45,7 @@ RSpec.describe SimpleCache::BelongsTo do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(player.user)
+        expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(player.user))
       end
 
       context "after committing a transaction" do
@@ -74,7 +74,7 @@ RSpec.describe SimpleCache::BelongsTo do
           object_with_cache = player.user
           object_with_cache.name = changed_name
           object_with_cache.save!
-          Player.take.user
+          Player.take.cached_user
         end
 
         its(:name) { is_expected.to eq(changed_name) }
@@ -82,7 +82,7 @@ RSpec.describe SimpleCache::BelongsTo do
         it "should cache the association objects" do
           expect(SimpleCache.store.read(cache_key)).to be_nil
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+          expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(cached_objects))
         end
       end
     end
@@ -91,7 +91,7 @@ RSpec.describe SimpleCache::BelongsTo do
 
       let(:cache_key) { item.simple_cache_inverse_association_key(:hero) }
 
-      subject { item.hero }
+      subject { item.cached_hero }
 
       it { is_expected.to be_an(Player) }
 
@@ -99,7 +99,7 @@ RSpec.describe SimpleCache::BelongsTo do
 
       it "should cache the association objects" do
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(item.hero)
+        expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(item.hero))
       end
 
       context "after committing a transaction" do
@@ -107,10 +107,10 @@ RSpec.describe SimpleCache::BelongsTo do
         let(:changed_name) { 'changed name' }
 
         subject do
-          object_with_cache = item.hero
+          object_with_cache = item.cached_hero
           object_with_cache.name = changed_name
           object_with_cache.save!
-          item.hero
+          item.cached_hero
         end
 
         it "should remove the association objects from the cache store" do
@@ -126,17 +126,17 @@ RSpec.describe SimpleCache::BelongsTo do
         let(:changed_name) { 'changed name' }
 
         subject do
-          object_with_cache = item.hero
+          object_with_cache = item.cached_hero
           object_with_cache.name = changed_name
           object_with_cache.save!
-          Item.take.hero
+          Item.take.cached_hero
         end
 
         its(:name) { is_expected.to eq(changed_name) }
 
         it "should cache the association objects" do
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
+          expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(cached_objects))
         end
       end
     end

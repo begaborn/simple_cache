@@ -27,9 +27,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'appraisal', '>= 0.3.8'
   spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'pry-byebug'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'mysql2', '>=0.4.4'
-  #spec.add_development_dependency 'mysql2', '= 0.3.18'
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'

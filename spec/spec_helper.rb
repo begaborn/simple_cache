@@ -1,7 +1,7 @@
+require "pry"
 require "bundler/setup"
 require "simple_cache"
 require "support/models"
-require "pry-byebug"
 require "rspec/its"
 
 SimpleCache.instance_variable_set(:@directory, File.dirname(__FILE__))

@@ -20,24 +20,49 @@ module SimpleCache
       if cached_obj.nil?
         SimpleCache.logger.debug "[SimpleCache] miss #{key}"
         obj = block.call
-        write(key, Marshal.dump(obj))
+        m_obj = obj.is_a?(Array) ? obj : Marshal.dump(obj)
+        write(key, m_obj)
         obj
       elsif cached_obj == SimpleCache::LOCK_VAL
         SimpleCache.logger.debug "[SimpleCache] locking #{key}"
         block.call
       else
-        Marshal.load(cached_obj)
+        begin
+          if cached_obj.is_a? String
+            Marshal.load(cached_obj)
+          elsif cached_obj.is_a? Array
+            cached_obj
+          else
+            SimpleCache.logger.debug "[SimpleCache] invalid objest #{key}"
+            obj = block.call
+            m_obj = obj.is_a?(Array) ? obj : Marshal.dump(obj)
+            write(key, m_obj)
+            obj
+          end
+        rescue => e
+          SimpleCache.logger.debug "[SimpleCache] failed to fetch #{key}"
+          obj = block.call
+          m_obj = obj.is_a?(Array) ? obj : Marshal.dump(obj)
+          write(key, m_obj)
+          obj
+        end
       end
     end
 
     def delete(key)
       SimpleCache.logger.debug "[SimpleCache] delete #{key}"
       SimpleCache.store.delete(key)
+
+      SimpleCache.logger.debug "[SimpleCache] delete #{key}:ids"
+      SimpleCache.store.delete("#{key}:ids")
     end
 
     def lock(key)
       SimpleCache.logger.debug "[SimpleCache] lock #{key}"
       SimpleCache.store.write(key, SimpleCache::LOCK_VAL, expires_in: 2.minutes)
+
+      SimpleCache.logger.debug "[SimpleCache] lock #{key}:ids"
+      SimpleCache.store.write("#{key}:ids", SimpleCache::LOCK_VAL, expires_in: 2.minutes)
     end
 
     def lock_associations_of(base_class)

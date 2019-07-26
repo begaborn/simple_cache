@@ -52,11 +52,7 @@ module SimpleCache
   end
 
   def self.use?(options = {})
-    if auto_cache?
-      (options[:cache].nil? || options[:cache])
-    else
-      options[:cache]
-    end && (options.keys & not_allowed_options).size.zero?
+    (options.keys & not_allowed_options).size.zero?
   end
 end
 
