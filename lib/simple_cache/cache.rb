@@ -20,7 +20,7 @@ module SimpleCache
       if cached_obj.nil?
         SimpleCache.logger.debug "[SimpleCache] miss #{key}"
         obj = block.call
-        #m_obj = obj.is_a?(Array) ? obj : Marshal.dump(obj)
+
         m_obj = nil
         klass = obj.class
 
