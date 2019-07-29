@@ -5,7 +5,7 @@ It's simple! Nothing needs to be done to cache and refresh the model objects!
 Let's say there are the following two models with a one-to-many relationship.
 ```ruby:user.rb
 class User < ApplicationRecord
-  has_many :players, cache: true
+  has_one_cached :player
 end
 ```
 ```ruby:player.rb
@@ -13,10 +13,10 @@ class Player < ApplicationRecord
 end
 ```
 
-At first, the `players` objects, which are the `user` object's associations, will be retrieved from the database when executing the following sample snippet. At the same time, the `players` objects will be stored in the Memcached automatically.
-When executing the following code again, `players` objects will be retrieved from the Memcached, not the database.
+At first, the `player` object, which are the `user` object's associations, will be retrieved from the database when executing the following sample snippet. At the same time, the `player` object ids will be stored in the Memcached automatically.
+When executing the following code again, `player` object ids will be retrieved from the Memcached, not the database.
 ```
-User.take.players
+User.take.cached_player
 ```
 
 <img width="643" alt="screen shot 2018-11-12 at 8 01 53 pm" src="https://user-images.githubusercontent.com/12689917/48343478-d4e44980-e6b5-11e8-90ad-b75e3356c9c9.png">
@@ -39,28 +39,35 @@ bundle install
 ## Cache the object for `find`
 ```ruby:user.rb
 class User < ApplicationRecord
-  find_method_use_cache
 end
+
+User.find_cache(1)
 ```
 
 ## Cache the association object for `has_one`
 ```ruby:user.rb
 class User < ActiveRecord::Base
-  has_one :account, cache: true
+  has_one_cached :account
 end
+
+User.take.cached_account
+
 ```
 
 ## Cache the association objects for `has_many`
 ```ruby:user.rb
 class User < ActiveRecord::Base
-  has_many :players, cache: true
+  has_many_cached_ids_of :players
 end
+
+User.cached_player_ids
+# => [1, 2, 3] # Array [Player's ids]
 ```
 
 ## Cache the association object for `belongs_to`
 ```ruby:user.rb
 class Player < ActiveRecord::Base
-  belongs_to :user, cache: true
+  belongs_to_cached :user
 end
 ```
 
