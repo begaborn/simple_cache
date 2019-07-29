@@ -20,7 +20,18 @@ module SimpleCache
       if cached_obj.nil?
         SimpleCache.logger.debug "[SimpleCache] miss #{key}"
         obj = block.call
-        m_obj = obj.is_a?(Array) ? obj : Marshal.dump(obj)
+        #m_obj = obj.is_a?(Array) ? obj : Marshal.dump(obj)
+        m_obj = nil
+        klass = obj.class
+
+        if klass < Array
+          m_obj = obj
+        elsif klass < ActiveRecord::Base || klass < ActiveRecord::Relation
+          m_obj = Marshal.dump(obj)
+        else
+          return obj
+        end
+
         write(key, m_obj)
         obj
       elsif cached_obj == SimpleCache::LOCK_VAL
