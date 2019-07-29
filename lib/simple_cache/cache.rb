@@ -20,26 +20,25 @@ module SimpleCache
       if cached_obj.nil?
         SimpleCache.logger.debug "[SimpleCache] miss #{key}"
         obj = block.call
-        obj = block.call
-        write(key, obj) if obj.is_a? Array || obj.class < ActiveRecord::Base
+        write(key, obj) if obj.is_a?(Array) || obj.class < ActiveRecord::Base
         obj
       elsif cached_obj == SimpleCache::LOCK_VAL
         SimpleCache.logger.debug "[SimpleCache] locking #{key}"
         block.call
       else
         begin
-          if cached_obj.is_a? Array || obj.class < ActiveRecord::Base
+          if cached_obj.is_a?(Array) || obj.class < ActiveRecord::Base
             cached_obj
           else
             SimpleCache.logger.debug "[SimpleCache] invalid objest #{key}"
             obj = block.call
-            write(key, obj) if obj.is_a? Array || obj.class < ActiveRecord::Base
+            write(key, obj) if obj.is_a?(Array) || obj.class < ActiveRecord::Base
             obj
           end
         rescue => e
           SimpleCache.logger.debug "[SimpleCache] failed to fetch #{key}"
           obj = block.call
-          write(key, obj) if obj.is_a? Array || obj.class < ActiveRecord::Base
+          write(key, obj) if obj.is_a?(Array) || obj.class < ActiveRecord::Base
           obj
         end
       end
