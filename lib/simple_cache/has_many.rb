@@ -18,7 +18,7 @@ module SimpleCache
       def define_cache_method_for_one_to_many(method_name, **options)
         define_method("cached_#{method_name}") do
           self.cache_association_model(method_name) do
-            send(method_name).load
+            send(method_name).to_a
           end
         end
 
