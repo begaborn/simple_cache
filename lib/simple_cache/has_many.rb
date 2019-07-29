@@ -3,7 +3,7 @@ module SimpleCache
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def has_many_cached(name, scope = nil, **options, &extension)
+      def has_many_cached_ids_of(name, scope = nil, **options, &extension)
 
         has_many(name, scope, options, &extension)
 
@@ -16,12 +16,6 @@ module SimpleCache
       private
 
       def define_cache_method_for_one_to_many(method_name, **options)
-        define_method("cached_#{method_name}") do
-          self.cache_association_model(method_name) do
-            send(method_name).to_a
-          end
-        end
-
         define_method("cached_#{method_name.to_s.singularize}_ids") do
           self.cache_association_ids(method_name) do
             send("#{method_name.to_s.singularize.to_s}_ids")
