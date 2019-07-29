@@ -20,7 +20,8 @@ module SimpleCache
           @simple_cache_belongs_to[method_name] ||= begin
             key = self.simple_cache_inverse_association_key(method_name)
             SimpleCache.cache.fetch(key) do
-              send(method_name)
+              obj = send(method_name)
+              obj.class.find(obj.id)
             end
           end
         end

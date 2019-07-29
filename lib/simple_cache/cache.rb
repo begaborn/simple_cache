@@ -27,14 +27,7 @@ module SimpleCache
         block.call
       else
         begin
-          if cached_obj.is_a?(Array) || obj.class < ActiveRecord::Base
-            cached_obj
-          else
-            SimpleCache.logger.debug "[SimpleCache] invalid objest #{key}"
-            obj = block.call
-            write(key, obj) if obj.is_a?(Array) || obj.class < ActiveRecord::Base
-            obj
-          end
+          cached_obj
         rescue => e
           SimpleCache.logger.debug "[SimpleCache] failed to fetch #{key}"
           obj = block.call

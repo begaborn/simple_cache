@@ -18,7 +18,8 @@ module SimpleCache
       def define_cache_method_for_one_to_one(method_name)
         define_method("cached_#{method_name}") do
           self.cache_association_model(method_name) do
-            send(method_name)
+            obj = send(method_name)
+            obj.class.find(obj.id)
           end
         end
       end
