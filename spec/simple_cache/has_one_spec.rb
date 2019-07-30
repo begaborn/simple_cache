@@ -29,7 +29,7 @@ RSpec.describe SimpleCache::HasOne do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
-        expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(cached_object))
+        expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
       end
 
       context "after committing a transaction" do
@@ -71,7 +71,7 @@ RSpec.describe SimpleCache::HasOne do
         user.cached_account_with_cache
       end
 
-      expect(query_count).to eq(3)
+      expect(query_count).to eq(4)
     end
   end
 end

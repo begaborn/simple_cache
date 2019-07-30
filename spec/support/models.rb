@@ -35,8 +35,8 @@ class Player < ActiveRecord::Base
 end
 
 class User < ActiveRecord::Base
-  has_many :players
-  has_many :p1, class_name: :Player do
+  has_many_cached_ids_of :players
+  has_many_cached_ids_of :p1, class_name: :Player do
     def hero
       @hero ||= find_by(is_hero: true)
     end

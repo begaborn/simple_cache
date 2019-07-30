@@ -45,7 +45,7 @@ RSpec.describe SimpleCache::BelongsTo do
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(player.user))
+        expect(SimpleCache.store.read(cache_key)).to eq(player.user)
       end
 
       context "after committing a transaction" do
@@ -82,7 +82,7 @@ RSpec.describe SimpleCache::BelongsTo do
         it "should cache the association objects" do
           expect(SimpleCache.store.read(cache_key)).to be_nil
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(cached_objects))
+          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
         end
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe SimpleCache::BelongsTo do
 
       it "should cache the association objects" do
         subject
-        expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(item.hero))
+        expect(SimpleCache.store.read(cache_key)).to eq(item.hero)
       end
 
       context "after committing a transaction" do
@@ -136,7 +136,7 @@ RSpec.describe SimpleCache::BelongsTo do
 
         it "should cache the association objects" do
           cached_objects = subject
-          expect(SimpleCache.store.read(cache_key)).to eq(Marshal.dump(cached_objects))
+          expect(SimpleCache.store.read(cache_key)).to eq(cached_objects)
         end
       end
     end

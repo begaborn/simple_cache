@@ -21,24 +21,24 @@ RSpec.describe SimpleCache::HasMany do
     end
 
     context "when using cache" do
-      let(:cache_key) { user.simple_cache_association_key(:players) }
+      let(:cache_key) { "#{user.simple_cache_association_key(:players)}:ids" }
       let(:org_name) { user.players.first.name }
       let(:changed_name) { 'changed name' }
       let(:org_size) { user.players.size }
 
-      subject { user.cached_players }
+      subject { user.cached_player_ids }
 
 
-      it { is_expected.to be_an(ActiveRecord::Associations::CollectionProxy) }
+      it { is_expected.to be_an(Array) }
 
       its(:size) { is_expected.to eq(User.take.players.size) }
 
-      its(:first) { is_expected.to be_an(Player) }
+      its(:first) { is_expected.to be_an(Player.take.id) }
 
       it "should cache the association objects" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         subject
-        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(user.players)
+        expect(SimpleCache.store.read(cache_key)).to eq(user.players.pluck(:id))
       end
 
       context "after committing a transaction" do
