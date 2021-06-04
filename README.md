@@ -39,6 +39,7 @@ bundle install
 ## Cache the object for `find`
 ```ruby:user.rb
 class User < ApplicationRecord
+  use_find_cache # Delare that you'll use method 'find_cache'
 end
 
 User.find_cache(1)
