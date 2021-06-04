@@ -50,7 +50,7 @@ module SimpleCache
       SimpleCache.store.delete(key)
     end
 
-    def lock(key)
+    def lock_with_ids(key)
       SimpleCache.logger.debug "[SimpleCache] lock #{key}"
       SimpleCache.store.write(key, SimpleCache::LOCK_VAL, expires_in: 2.minutes)
 
@@ -58,12 +58,17 @@ module SimpleCache
       SimpleCache.store.write("#{key}:ids", SimpleCache::LOCK_VAL, expires_in: 2.minutes)
     end
 
+    def lock(key)
+      SimpleCache.logger.debug "[SimpleCache] lock #{key}"
+      SimpleCache.store.write(key, SimpleCache::LOCK_VAL, expires_in: 2.minutes)
+    end
+
     def lock_associations_of(base_class)
       keys = []
       cached_associations_of(base_class) do |obj, method_name|
         key = obj.simple_cache_association_key(method_name)
         keys << key
-        lock(key)
+        lock_with_ids(key)
       end
       keys
     end
