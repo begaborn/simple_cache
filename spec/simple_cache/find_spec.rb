@@ -20,7 +20,7 @@ RSpec.describe SimpleCache::Find do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
         expect(SimpleCache.store).to have_received(:write)
-        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_object)
+        expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe SimpleCache::Find do
       end
 
       it "should remove the object from the cache store" do
-        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(user)
+        expect(SimpleCache.store.read(cache_key)).to eq(user)
         subject
         expect(SimpleCache.store.read(cache_key)).to be_nil
       end
@@ -64,7 +64,7 @@ RSpec.describe SimpleCache::Find do
       it "should remove the object from the cache store" do
         expect(SimpleCache.store.read(cache_key)).to be_nil
         cached_object = subject
-        expect(Marshal.load(SimpleCache.store.read(cache_key))).to eq(cached_object)
+        expect(SimpleCache.store.read(cache_key)).to eq(cached_object)
       end
     end
   end

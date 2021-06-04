@@ -37,12 +37,17 @@ module SimpleCache
       end
     end
 
-    def delete(key)
+    def delete_with_ids(key)
       SimpleCache.logger.debug "[SimpleCache] delete #{key}"
       SimpleCache.store.delete(key)
 
       SimpleCache.logger.debug "[SimpleCache] delete #{key}:ids"
       SimpleCache.store.delete("#{key}:ids")
+    end
+
+    def delete(key)
+      SimpleCache.logger.debug "[SimpleCache] delete #{key}"
+      SimpleCache.store.delete(key)
     end
 
     def lock(key)
@@ -74,7 +79,7 @@ module SimpleCache
 
     def delete_all(keys)
       keys.each do |key|
-        delete(key)
+        delete_with_ids(key)
       end
     end
 

@@ -9,7 +9,19 @@ module SimpleCache
 
         return unless SimpleCache.use? options
 
+        r = self.reflections[name.to_s]
+
+        add_simple_cache_classses(r.class_name)
+
         define_cache_belongs_to(name)
+      end
+
+      def use_simple_cache(use = true)
+        @use_simple_cache = use
+      end
+
+      def use_simple_cache?
+        !!@use_simple_cache
       end
 
       private
