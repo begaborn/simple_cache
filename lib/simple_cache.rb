@@ -57,14 +57,14 @@ module SimpleCache
 end
 
 class ActiveRecord::Base
-  @@simple_cache_classses = []
+  @@simple_cache_classes = []
 
-  def self.simple_cache_classses
-    @@simple_cache_classses
+  def self.simple_cache_classes
+    @@simple_cache_classes
   end
 
-  def self.add_simple_cache_classses(val)
-    @@simple_cache_classses |= [val]
+  def self.add_simple_cache_classes(val)
+    @@simple_cache_classes |= [val]
   end
 
   include SimpleCache::Helpable

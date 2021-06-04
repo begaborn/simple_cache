@@ -5,18 +5,18 @@ module SimpleCache
     included do
       before_save do |_record|
         self.locked_simple_cache_key = SimpleCache.cache.lock_associations_of(self)
-        SimpleCache.cache.lock(simple_cache_key) if self.class.simple_cache_classses.include?(self.class.name)
+        SimpleCache.cache.lock(simple_cache_key) if self.class.simple_cache_classes.include?(self.class.name)
       end
 
       before_destroy do |_record|
         self.locked_simple_cache_key = SimpleCache.cache.lock_associations_of(self)
-        SimpleCache.cache.lock(simple_cache_key) if self.class.simple_cache_classses.include?(self.class.name)
+        SimpleCache.cache.lock(simple_cache_key) if self.class.simple_cache_classes.include?(self.class.name)
       end
 
       after_commit do |_record|
-        SimpleCache.cache.delete(simple_cache_key)
+        SimpleCache.cache.delete(simple_cache_key) if self.class.simple_cache_classes.include?(self.class.name)
         SimpleCache.cache.delete_all locked_simple_cache_key
-        self.reset_locked_simple_cache_key if self.class.simple_cache_classses.include?(self.class.name)
+        self.reset_locked_simple_cache_key
       end
     end
 

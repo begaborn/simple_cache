@@ -11,7 +11,7 @@ module SimpleCache
 
         r = self.reflections[name.to_s]
 
-        add_simple_cache_classses(r.class_name)
+        add_simple_cache_classes(r.class_name)
 
         define_cache_belongs_to(name)
       end

@@ -4,7 +4,7 @@ module SimpleCache
 
     module ClassMethods
       def use_find_cache
-        self.add_simple_cache_classses(self.name)
+        self.add_simple_cache_classes(self.name)
 
         define_singleton_method(:find_cache) do |id|
           raise 'Invalid Argument(id)' unless id.is_a? Integer
