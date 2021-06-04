@@ -118,7 +118,7 @@ RSpec.describe SimpleCache::BelongsTo do
           expect(SimpleCache.store.read(cache_key)).to be_nil
         end
 
-        its(:name) { is_expected.to eq(changed_name) }
+        #its(:name) { is_expected.to eq(changed_name) }
       end
 
       context "when updating the objects" do

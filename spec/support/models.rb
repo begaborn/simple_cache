@@ -30,11 +30,12 @@ end
 
 
 class Player < ActiveRecord::Base
-  has_many   :items
+  has_many_cached_ids_of :items
   belongs_to_cached :user
 end
 
 class User < ActiveRecord::Base
+  use_find_cache
   has_many_cached_ids_of :players
   has_many_cached_ids_of :p1, class_name: :Player do
     def hero
